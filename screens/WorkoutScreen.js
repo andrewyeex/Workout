@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 
-import { WorkoutContext } from '../context/workout'
+import { WorkoutContext } from '../context/Workout'
 
 export default class WorkoutScreen extends Component {
   static navigationOptions = {
