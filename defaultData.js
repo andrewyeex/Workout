@@ -9,18 +9,18 @@ const defaultData = {
           "activities": [
             {
               "order": 1,
-              "duration": 30,
+              "duration": 3,
               "id": "12sdgfna83"
             },
             {
               "order": 2,
-              "duration": 30,
+              "duration": 5,
               "id": "12sdgfna83"
             }
           ]
         },
         {
-          "id": "d8f23nf78a",
+          "id": "m39s8dg134",
           "name": "Absolute Cardio",
           "description": "Crazy running sweat",
           "image": "run6",
@@ -28,30 +28,28 @@ const defaultData = {
             {
               "order": 1,
               "duration": 30,
-              "id": "m39s8dg134"
+              "id": "d8f23nf78a"
             },
             {
               "order": 2,
               "duration": 30,
-              "id": "m39s8dg134"
+              "id": "d8f23nf78a"
             }
           ]
         }
       ],
-      "activities": [
-        {
-          "id": "12sdgfna83",
+      "activities": {
+        "12sdgfna83" : {
           "name": "break",
           "description": "relax and recover",
           "youtube": "https://www.youtube.com/watch?v=n9e7esJj6Hw"
         },
-        {
-          "id": "d8f23nf78a",
+        "d8f23nf78a" : {
           "name": "Push Up",
           "description": "Basic Push Up exercises",
           "youtube": "https://www.youtube.com/watch?v=IODxDxX7oi4"
         }
-      ],
+      },
       "completed": [
         {
           "workout_id": "gk39a8sf345",
