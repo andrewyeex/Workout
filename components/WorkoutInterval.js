@@ -4,9 +4,11 @@ import * as Progress from 'react-native-progress'
 
 export class WorkoutInterval extends Component {
   state = {
-    selected: 0,
+    activityIndex: 0,
     activity: [],
-    showIntro: true
+    showIntro: true,
+    progressCounter: 0,
+    progressTotal: 0
   }
   activityLength  = this.props.selectedWorkout.activities.length
   /**

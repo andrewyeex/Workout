@@ -73,9 +73,7 @@ export default class WorkoutScreen extends Component {
   render() {
     return (
       <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'column'}}>
-        {Object.values(this.state.selectedWorkout).length > 0 ?
-          this.renderWorkout() : this.renderWorkoutMenu()
-        }
+        {Object.values(this.state.selectedWorkout).length > 0 ? this.renderWorkout() : this.renderWorkoutMenu()}
       </View>
     )
   }
