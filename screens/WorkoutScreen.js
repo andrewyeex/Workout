@@ -9,7 +9,23 @@ import {
   View,
 } from 'react-native';
 
+import WorkoutCard from '../components/WorkoutCard'
 import { WorkoutContext } from '../context/Workout'
+
+const imageMapper = {
+  run1: require('../assets/images/run1.jpg'),
+  run2: require('../assets/images/run2.jpg'),
+  run3: require('../assets/images/run3.jpg'),
+  run4: require('../assets/images/run4.jpg'),
+  run5: require('../assets/images/run5.jpg'),
+  run6: require('../assets/images/run6.jpg'),
+  lift1: require('../assets/images/lift1.jpg'),
+  lift2: require('../assets/images/lift2.jpg'),
+  lift3: require('../assets/images/lift3.jpg'),
+  lift4: require('../assets/images/lift4.jpg'),
+  lift5: require('../assets/images/lift5.jpg'),
+  lift6: require('../assets/images/lift6.jpg')
+}
 
 export default class WorkoutScreen extends Component {
   static navigationOptions = {
@@ -18,24 +34,23 @@ export default class WorkoutScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
         <WorkoutContext.Consumer>
-          {
-            ({app: { workouts }}) => {
-              return workouts.map(({
+          {({app: { workouts }}) => (
+              workouts.map(({
                 id,
                 name,
-                description,
-                activities
-              }) => 
-                <ScrollView key={id}>
-                  <Text>{name}</Text>
-                  <Text>{description}</Text>
-                  <Text>{activities.toString()}</Text>
-                </ScrollView>
+                image,
+                description
+              }) => (
+                <WorkoutCard
+                  key={id}
+                  image={imageMapper[image]}
+                  name={name}
+                  description={description}
+                />
               )
-            }
-          }
+          ))}
         </WorkoutContext.Consumer>
       </View>
     )

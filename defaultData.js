@@ -4,7 +4,8 @@ const defaultData = {
         {
           "id": "gk39a8sf345",
           "name": "Absolute Power",
-          "description": "Crazy muscle building exercises",
+          "description": "Crazy muscle building",
+          "image": "lift1",
           "activities": [
             {
               "order": 1,
@@ -22,6 +23,7 @@ const defaultData = {
           "id": "d8f23nf78a",
           "name": "Absolute Cardio",
           "description": "Crazy running sweat",
+          "image": "run6",
           "activities": [
             {
               "order": 1,
