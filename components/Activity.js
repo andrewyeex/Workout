@@ -14,10 +14,8 @@ const Activity = ({
   progressCounter,
   progressTotal
 }) => {
-
   if (workoutActivities[workoutActivityIndex]) {
-    console.log({ workoutActivityIndex: workoutActivities[workoutActivityIndex] })
-    const { id, duration } = workoutActivities[workoutActivityIndex]
+    const { id, duration, order } = workoutActivities[workoutActivityIndex]
     const { name } = activities[id]
     return (
       <View style={{flex: 1}}>
@@ -31,10 +29,10 @@ const Activity = ({
           </Text>
         </View>
         <View style={{flexGrow: 1, alignItems: 'center'}}>
-          <Countdown duration={duration} intervalCallback={handleDecrementProgressCounter} onEnd={handleIncrementWorkoutActivityIndex}/>
+          <Countdown key={order} duration={duration} intervalCallback={handleDecrementProgressCounter} onEnd={handleIncrementWorkoutActivityIndex}/>
         </View>
         <View style={{flexGrow: 3, alignItems: 'center', justifyContent: 'center'}}>
-          <Progress.Pie size={300} progress={progressCounter/progressTotal}/>
+          <Progress.Pie key={order} size={300} progress={progressCounter/progressTotal}/>
         </View>
         <View style={{flexGrow: .25}}>
           <Text>BOTTOM</Text>

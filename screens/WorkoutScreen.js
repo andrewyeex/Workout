@@ -1,13 +1,5 @@
-import React, { Component } from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { Component } from 'react'
+import { View, ScrollView} from 'react-native'
 
 import WorkoutCard from '../components/WorkoutCard'
 import WorkoutInterval from '../components/WorkoutInterval'
@@ -40,8 +32,9 @@ export default class WorkoutScreen extends Component {
   handleSelectedWorkout = selectedWorkout => this.setState({ selectedWorkout })
 
   renderWorkoutMenu = () => (
-    <WorkoutContext.Consumer>
-      {({app: { workouts }}) => (
+    <ScrollView style={{flex: 1}}>
+      <WorkoutContext.Consumer>
+        {({app: { workouts }}) => (
           workouts.map(({
             id,
             name,
@@ -55,10 +48,9 @@ export default class WorkoutScreen extends Component {
               name={name}
               description={description}
               activities={activities}
-              handleSelectedWorkout={this.handleSelectedWorkout} />
-          )
-      ))}
-    </WorkoutContext.Consumer>
+              handleSelectedWorkout={this.handleSelectedWorkout} /> )))}
+      </WorkoutContext.Consumer>
+    </ScrollView>
   )
 
   renderWorkout = () => (
@@ -66,7 +58,8 @@ export default class WorkoutScreen extends Component {
       {({app: { activities }}) =>
       <WorkoutInterval
         activities={activities}
-        selectedWorkout={this.state.selectedWorkout} />}
+        selectedWorkout={this.state.selectedWorkout}
+        handleSelectedWorkout={this.handleSelectedWorkout} />}
     </WorkoutContext.Consumer>
   )
 

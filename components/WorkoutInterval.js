@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text } from 'react-native'
+import { Text, TouchableOpacity} from 'react-native'
 import { Countdown } from './Countdown'
 import { Activity } from './Activity'
 
@@ -21,9 +21,17 @@ export default class WorkoutInterval extends Component {
     })
   }
 
-  handleIncrementWorkoutActivityIndex = () => this.setState(prevState => ({workoutActivityIndex: prevState.workoutActivityIndex+1}))
+  handleIncrementWorkoutActivityIndex = () => this.setState(prevState => {
+    const workoutActivityIndex = prevState.workoutActivityIndex+1
+    return {
+      workoutActivityIndex,
+      progressCounter: this.workoutActivities[workoutActivityIndex] ? this.workoutActivities[workoutActivityIndex].duration : 0,
+      progressTotal: this.workoutActivities[workoutActivityIndex] ? this.workoutActivities[workoutActivityIndex].duration : 0
+    }
+  })
   handleDecrementProgressCounter = () => this.state.progressCounter > 0 && this.setState(prevState => ({progressCounter: prevState.progressCounter-1}))
   handleToggleShowIntro = () => this.setState(prevState => ({showIntro: !prevState.showIntro}))
+  handleSelectedWorkout = () => this.props.handleSelectedWorkout({})
 
   render() {
     const {
@@ -49,6 +57,6 @@ export default class WorkoutInterval extends Component {
           handleDecrementProgressCounter={this.handleDecrementProgressCounter}
           workoutActivitiesLength={this.workoutActivitiesLength} />
       else
-        return <Text>Nothing Here</Text>
+        return <TouchableOpacity onPress={this.handleSelectedWorkout}><Text>Congratulations, you finished!</Text></TouchableOpacity>
   }
 }

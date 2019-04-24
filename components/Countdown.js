@@ -6,7 +6,7 @@ class Countdown extends React.Component {
   state = { counter: this.props.duration }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.counter === 0) {
+    if (this.state.counter === -1) {
       clearInterval(this.interval)
       typeof this.props.onEnd === 'function' && this.props.onEnd()
     }
