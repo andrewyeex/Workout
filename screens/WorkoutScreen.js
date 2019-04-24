@@ -3,6 +3,7 @@ import { View, ScrollView} from 'react-native'
 
 import WorkoutCard from '../components/WorkoutCard'
 import WorkoutInterval from '../components/WorkoutInterval'
+import WorkoutInfo from '../components/WorkoutInfo'
 import { WorkoutContext } from '../context/Workout'
 
 const imageMapper = {
@@ -26,9 +27,11 @@ export default class WorkoutScreen extends Component {
   };
 
   state = {
-    selectedWorkout: {}
+    selectedWorkout: {},
+    begin: false
   }
 
+  handleBeginWorkout = begin => this.setState({ begin })
   handleSelectedWorkout = selectedWorkout => this.setState({ selectedWorkout })
 
   renderWorkoutMenu = () => (
@@ -56,10 +59,15 @@ export default class WorkoutScreen extends Component {
   renderWorkout = () => (
     <WorkoutContext.Consumer>
       {({app: { activities }}) =>
+      this.state.begin ?
       <WorkoutInterval
         activities={activities}
         selectedWorkout={this.state.selectedWorkout}
-        handleSelectedWorkout={this.handleSelectedWorkout} />}
+        handleSelectedWorkout={this.handleSelectedWorkout} /> :
+      <WorkoutInfo
+        activities={activities}
+        selectedWorkout={this.state.selectedWorkout}
+        handleBeginWorkout={this.handleBeginWorkout} /> }
     </WorkoutContext.Consumer>
   )
 
@@ -72,3 +80,8 @@ export default class WorkoutScreen extends Component {
   }
 }
 
+/*
+
+
+
+*/

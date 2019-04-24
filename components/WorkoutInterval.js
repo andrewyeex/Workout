@@ -40,7 +40,7 @@ export default class WorkoutInterval extends Component {
       showIntro,
       workoutActivityIndex
     } = this.state
-    
+
     const { activities } = this.props
 
     if (showIntro)
