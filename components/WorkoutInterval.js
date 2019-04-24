@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, TouchableOpacity} from 'react-native'
-import { Countdown } from './Countdown'
-import { Activity } from './Activity'
+import Countdown from '../ui_components/Countdown'
+import Activity from './Activity'
 
 export default class WorkoutInterval extends Component {
   state = {

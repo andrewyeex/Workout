@@ -4,7 +4,7 @@ import { View, ScrollView} from 'react-native'
 import WorkoutCard from '../components/WorkoutCard'
 import WorkoutInterval from '../components/WorkoutInterval'
 import WorkoutInfo from '../components/WorkoutInfo'
-import { WorkoutContext } from '../context/Workout'
+import { WorkoutContext } from '../context/WorkoutContext'
 
 const imageMapper = {
   run1: require('../assets/images/run1.jpg'),

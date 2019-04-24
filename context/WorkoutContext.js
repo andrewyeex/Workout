@@ -3,7 +3,7 @@ import { defaultData } from '../defaultData'
 
 export const WorkoutContext = React.createContext()
 
-export default class WorkoutProvider extends React.Component {
+export class WorkoutProvider extends React.Component {
   state = defaultData
 
   set(key, value) {
@@ -18,7 +18,7 @@ export default class WorkoutProvider extends React.Component {
 
   render(){
     return(
-      <WorkoutContext.Provider value={this.state}>
+      <WorkoutContext.Provider value={{...this.state, set: this.set, get: this.get}}>
         {this.props.children}
       </WorkoutContext.Provider>
     )

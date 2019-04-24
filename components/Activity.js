@@ -4,9 +4,7 @@ import * as Progress from 'react-native-progress'
 
 import TextRowLinks from '../ui_components/TextRowLinks'
 import TextHeader from '../ui_components/TextHeader'
-import TextSubHeader from '../ui_components/TextSubHeader'
-import TextList from '../ui_components/TextList'
-import { Countdown } from './Countdown'
+import Countdown from '../ui_components/Countdown'
 
 const Activity = ({
   activities,
@@ -46,4 +44,4 @@ const Activity = ({
   }
 }
 
-export { Activity }
+export default Activity

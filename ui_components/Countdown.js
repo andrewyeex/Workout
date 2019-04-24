@@ -37,4 +37,4 @@ class Countdown extends React.Component {
   }
 }
 
-export { Countdown }
+export default Countdown
