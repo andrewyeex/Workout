@@ -28,10 +28,25 @@ export class WorkoutProvider extends React.Component {
     this.setState({loading: false})
   }
 
+  get = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      if (value) return value
+      else this.setState(prevState => ({
+        e: prevState.error.push({error: `error getItem() key: ${key}`})
+      }))
+    } catch(e) {
+      this.setState(prevState => ({e: prevState.error.push(e)}))
+    }
+  }
+
   set = async (key, value = defaultData.app[key]) => {
     try {
-      const _value = await AsyncStorage.setItem(key, value.toString())
-      if (_value) this.setState({[key]: _value})
+      const value = await AsyncStorage.setItem(key, value.toString())
+      if (value) this.setState({[key]: value})
+      else this.setState(prevState => ({
+        e: prevState.error.push({error: `error setItem() key: ${key}, value: ${value.toString()}`})
+      }))
     } catch(e) {
       this.setState(prevState => ({e: prevState.error.push(e)}))
     }
