@@ -50,14 +50,14 @@ const defaultData = {
           "youtube": "https://www.youtube.com/watch?v=IODxDxX7oi4"
         }
       },
-      "completed": [
-        {
+      "completed": {
+        "11/12/2019" : [{
           "workout_id": "gk39a8sf345",
           "datetime": 123456778,
           "completed": false,
           "last_order": 1
-        }
-      ],
+        }]
+      },
       "username": "yeexay",
       "email": "andrew.yee@mail.com"
     }
