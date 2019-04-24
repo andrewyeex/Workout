@@ -37,7 +37,7 @@ export default class WorkoutScreen extends Component {
   renderWorkoutMenu = () => (
     <ScrollView style={{flex: 1}}>
       <WorkoutContext.Consumer>
-        {({app: { workouts }}) => (
+        {({ workouts }) => (
           workouts.map(({
             id,
             name,
@@ -58,7 +58,7 @@ export default class WorkoutScreen extends Component {
 
   renderWorkout = () => (
     <WorkoutContext.Consumer>
-      {({app: { activities }}) =>
+      {({activities }) =>
       this.state.begin ?
       <WorkoutInterval
         activities={activities}
