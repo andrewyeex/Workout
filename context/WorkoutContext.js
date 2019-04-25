@@ -36,13 +36,12 @@ export class WorkoutProvider extends React.Component {
 
   get = async (key) => {
     try {
-      const value = await AsyncStorage.getItem(key)
-      if (value) return value
-      else this.setState(prevState => ({
-        e: prevState.error.push({error: `error getItem() key: ${key}`})
-      }))
-    } catch(e) {
-      this.setState(prevState => ({e: prevState.error.push(e)}))
+      await AsyncStorage.getItem(key, (error, value) => {
+        if (!error) return value
+        else this.setState(prevState => ({error: [...prevState.error, error]}))
+      })
+    } catch(error) {
+      this.setState(prevState => ({error: [...prevState.error, error]}))
     }
   }
 
@@ -50,12 +49,10 @@ export class WorkoutProvider extends React.Component {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(v), (error) => {
         if (!error) this.setState({[key]: v})
-        else this.setState(prevState => ({
-          error: [...prevState.error, {error: `error setItem() key: ${key}, value: ${JSON.stringify(v)}`}]
-        }))
+        else this.setState(prevState => ({error: [...prevState.error, error]}))
       })
-    } catch(e) {
-      this.setState(prevState => ({error: [...prevState.error, e]}))
+    } catch(error) {
+      this.setState(prevState => ({error: [...prevState.error, error]}))
     }
   }
 
