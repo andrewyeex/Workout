@@ -58,7 +58,7 @@ export default class WorkoutScreen extends Component {
 
   renderWorkout = () => (
     <WorkoutContext.Consumer>
-      {({activities }) =>
+      {({ activities }) =>
       this.state.begin ?
       <WorkoutInterval
         activities={activities}

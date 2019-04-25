@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity} from 'react-native'
 import TextHeader from '../ui_components/TextHeader'
 
+
 import CreateAdd from '../components/CreateAdd'
 
 class CreateScreen extends React.Component {
@@ -10,10 +11,14 @@ class CreateScreen extends React.Component {
     addSelectedType: 'workout',
     addTextInputValue: 'Enter A Name',
     addTextInputDescription: 'Enter A Description',
-    addActivities: []
+    addActivities: [],
+    isAddActivitiesModalVisible: false
   }
 
   handleModeChange = mode => this.setState({ mode })
+  handleUpdateAddSelectedType = (type, index) => this.setState({ addSelectedType: type })
+  handleToggleIsAddActivitiesModalVisible = () => this.setState(prevState => ({isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible }))
+  handleAddActivities = activity => this.setState(prevState => ({addActivities: [...prevState, activity]}))
 
   render(){
     const {
@@ -22,19 +27,33 @@ class CreateScreen extends React.Component {
       addTextInputValue,
       addTextInputDescription,
       addActivities,
+      isAddActivitiesModalVisible
     } = this.state
+
+    const {
+      handleToggleIsAddActivitiesModalVisible,
+      handleUpdateAddSelectedType,
+      handleModeChange,
+      handleAddActivities
+    } = this
+
     const createAddProps = {
-      handleModeChange: this.handleModeChange,
+      handleToggleIsAddActivitiesModalVisible,
+      handleUpdateAddSelectedType,
+      handleModeChange,
+      handleAddActivities,
       addSelectedType,
       addTextInputValue,
       addTextInputDescription,
-      addActivities
+      addActivities,
+      isAddActivitiesModalVisible
     }
+    console.log({isAddActivitiesModalVisible})
     return(
       mode === 0 ? <CreateMenu handleModeChange={this.handleModeChange} /> :
       mode === 1 ? <CreateAdd {...createAddProps} /> :
       mode === 2 ? this.renderRemovePage() :
-      mode === 3 ? this.renderEditPage() : this.renderErrorPage() 
+      mode === 3 ? this.renderEditPage() : this.renderErrorPage()
     )
   }
 }
