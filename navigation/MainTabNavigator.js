@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import WorkoutScreen from '../screens/WorkoutScreen'
+import CreateScreen from '../screens/CreateScreen'
 
 const WorkoutStack = createStackNavigator({
   Workout: WorkoutScreen
@@ -25,11 +26,11 @@ WorkoutStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const CreateStack = createStackNavigator({
+  CreateStack: CreateScreen,
 });
 
-LinksStack.navigationOptions = {
+CreateStack.navigationOptions = {
   tabBarLabel: 'Create',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -55,6 +56,6 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   WorkoutStack,
-  LinksStack,
+  CreateStack,
   SettingsStack,
 });
