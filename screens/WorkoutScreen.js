@@ -79,9 +79,3 @@ export default class WorkoutScreen extends Component {
     )
   }
 }
-
-/*
-
-
-
-*/
