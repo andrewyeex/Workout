@@ -11,14 +11,18 @@ class CreateScreen extends React.Component {
     addSelectedType: 'workout',
     addTextInputValue: 'Enter A Name',
     addTextInputDescription: 'Enter A Description',
-    addActivities: [],
+    addActivitiesCollection: [],
     isAddActivitiesModalVisible: false
   }
 
   handleModeChange = mode => this.setState({ mode })
   handleUpdateAddSelectedType = (type, index) => this.setState({ addSelectedType: type })
   handleToggleIsAddActivitiesModalVisible = () => this.setState(prevState => ({isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible }))
-  handleAddActivities = activity => this.setState(prevState => ({addActivities: [...prevState, activity]}))
+  handleAddActivities = activity => this.setState(prevState => ({
+    addActivitiesCollection: [...prevState.addActivitiesCollection, activity],
+    isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible
+  }))
+  handleRemoveActivities = index => this.setState(prevState => ({ addActivitiesCollection: [...prevState.addActivitiesCollection].filter((v,i) => i !== index)}))
 
   render(){
     const {
@@ -26,7 +30,7 @@ class CreateScreen extends React.Component {
       addSelectedType,
       addTextInputValue,
       addTextInputDescription,
-      addActivities,
+      addActivitiesCollection,
       isAddActivitiesModalVisible
     } = this.state
 
@@ -34,7 +38,8 @@ class CreateScreen extends React.Component {
       handleToggleIsAddActivitiesModalVisible,
       handleUpdateAddSelectedType,
       handleModeChange,
-      handleAddActivities
+      handleAddActivities,
+      handleRemoveActivities
     } = this
 
     const createAddProps = {
@@ -42,13 +47,13 @@ class CreateScreen extends React.Component {
       handleUpdateAddSelectedType,
       handleModeChange,
       handleAddActivities,
+      handleRemoveActivities,
       addSelectedType,
       addTextInputValue,
       addTextInputDescription,
-      addActivities,
+      addActivitiesCollection,
       isAddActivitiesModalVisible
     }
-    console.log({isAddActivitiesModalVisible})
     return(
       mode === 0 ? <CreateMenu handleModeChange={this.handleModeChange} /> :
       mode === 1 ? <CreateAdd {...createAddProps} /> :

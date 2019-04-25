@@ -10,7 +10,7 @@ const Select = ({
   handleOptionSelected,
   options
 }) => (
-  <View style={{flex: 1, paddingVertical: 10, paddingHorizontal: 20}}>
+  <View style={{flex: .25, paddingVertical: 10, paddingHorizontal: 20}}>
     <PickerSelect
       placeholder={{
         label: placeholder,
@@ -21,8 +21,7 @@ const Select = ({
       value={optionSelected}
       Icon={() => <Icon.Ionicons name='ios-arrow-down' size={24} />}
       onValueChange={handleOptionSelected}
-      items={options}
-    />
+      items={options} />
   </View>
 )
 

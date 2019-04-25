@@ -6,7 +6,7 @@ import * as Progress from 'react-native-progress'
 export const WorkoutContext = React.createContext()
 
 const APP_KEYS = ['workouts', 'activities', 'completed']
-
+const APP_RESET = [['workouts', ''], ['activities', ''], ['completed', '']]
 export class WorkoutProvider extends React.Component {
   state = {
     loading: true,
@@ -28,11 +28,7 @@ export class WorkoutProvider extends React.Component {
     this.setState({loading: false})
   }
 
-  reset = async () => {
-    await AsyncStorage.multiSet([['workouts', ''], ['activities', ''], ['completed', '']], (err) => {
-      console.log({err})
-    })
-  }
+  reset = async () => await AsyncStorage.multiSet(APP_RESET, (err) => { })
 
   get = async (key) => {
     try {
