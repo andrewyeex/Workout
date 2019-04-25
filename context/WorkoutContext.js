@@ -28,6 +28,12 @@ export class WorkoutProvider extends React.Component {
     this.setState({loading: false})
   }
 
+  reset = async () => {
+    await AsyncStorage.multiSet([['workouts', ''], ['activities', ''], ['completed', '']], (err) => {
+      console.log({err})
+    })
+  }
+
   get = async (key) => {
     try {
       const value = await AsyncStorage.getItem(key)
@@ -40,15 +46,16 @@ export class WorkoutProvider extends React.Component {
     }
   }
 
-  set = async (key, value = defaultData.app[key]) => {
+  set = async (key, v = defaultData.app[key]) => {
     try {
-      const value = await AsyncStorage.setItem(key, value.toString())
-      if (value) this.setState({[key]: value})
-      else this.setState(prevState => ({
-        e: prevState.error.push({error: `error setItem() key: ${key}, value: ${value.toString()}`})
-      }))
+      await AsyncStorage.setItem(key, JSON.stringify(v), (error) => {
+        if (!error) this.setState({[key]: v})
+        else this.setState(prevState => ({
+          error: [...prevState.error, {error: `error setItem() key: ${key}, value: ${JSON.stringify(v)}`}]
+        }))
+      })
     } catch(e) {
-      this.setState(prevState => ({e: prevState.error.push(e)}))
+      this.setState(prevState => ({error: [...prevState.error, e]}))
     }
   }
 
@@ -57,7 +64,7 @@ export class WorkoutProvider extends React.Component {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Progress.Circle size={120} indeterminate={true} borderWidth={5} />
       </View> :
-      <WorkoutContext.Provider value={{...this.state}}>
+      <WorkoutContext.Provider value={this.state}>
         {this.props.children}
       </WorkoutContext.Provider>
   }
