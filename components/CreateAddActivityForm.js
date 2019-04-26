@@ -26,7 +26,7 @@ export default class CreateAddActivityForm extends Component {
               rightTextCallback={add(this.state)} />
             <Select
               placeholder={'Select an activity'}
-              options={Object.entries(activities).map(([key, {name: label}]) => ({label, value: key, key}))}
+              options={Object.entries(activities).map(([key, {name: label}]) => ({label, value: {key, label}, key}))}
               optionSelected={activitySelected}
               handleOptionSelected={this.handleActivitySelected} />
             <Select

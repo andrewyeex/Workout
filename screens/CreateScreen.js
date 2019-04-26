@@ -23,7 +23,7 @@ class CreateScreen extends React.Component {
     addActivitiesCollection: [...prevState.addActivitiesCollection, activity],
     isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible
   }))
-  handleRemoveActivities = index => this.setState(prevState => ({ addActivitiesCollection: [...prevState.addActivitiesCollection].filter((v,i) => i !== index)}))
+  handleRemoveActivities = index => () => this.setState(prevState => ({ addActivitiesCollection: [...prevState.addActivitiesCollection].filter((v,i) => i !== index)}))
 
   render(){
     const {

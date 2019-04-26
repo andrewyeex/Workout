@@ -80,10 +80,11 @@ const CreateAddActivityList = ({
           timeInSeconds
         }, i) => (
           <View key={i} style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={()=>handleRemoveActivities(i)}>
+            <TouchableOpacity style={{flex: 1 }} onPress={handleRemoveActivities(i)}>
               <Icon.Ionicons name='ios-remove-circle' size={24} />
             </TouchableOpacity>
-            <Text style={{lineHeight: 24, paddingLeft: 10}} >{activitySelected} {timeInSeconds}</Text>
+            <Text style={{flex: 1, lineHeight: 24, paddingLeft: 10}} >{activitySelected.label}</Text>
+            <Text style={{flex: 1, lineHeight: 24, paddingLeft: 10}}>{timeInSeconds} sec</Text>
           </View>
         ))}
       </TextList>}
