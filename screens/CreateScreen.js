@@ -18,6 +18,9 @@ class CreateScreen extends React.Component {
   handleModeChange = mode => this.setState({ mode })
   handleUpdateAddSelectedType = (type, index) => this.setState({ addSelectedType: type })
   handleToggleIsAddActivitiesModalVisible = () => this.setState(prevState => ({isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible }))
+
+  handleSetState = (e) => console.log({e: e.nativeEvent})//this.setState({[key]: value})
+
   handleAddActivities = activity => this.setState(prevState => ({
     addActivitiesCollection: [...prevState.addActivitiesCollection, activity],
     isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible
@@ -39,7 +42,8 @@ class CreateScreen extends React.Component {
       handleUpdateAddSelectedType,
       handleModeChange,
       handleAddActivities,
-      handleRemoveActivities
+      handleRemoveActivities,
+      handleSetState
     } = this
 
     const createAddProps = {
@@ -48,6 +52,7 @@ class CreateScreen extends React.Component {
       handleModeChange,
       handleAddActivities,
       handleRemoveActivities,
+      handleSetState,
       addSelectedType,
       addTextInputValue,
       addTextInputDescription,

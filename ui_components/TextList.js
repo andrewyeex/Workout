@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 const TextList = props => (
-  <View style={{backgroundColor: '#eee', padding: 10, borderRadius: 10}}>
+  <View style={{paddingHorizontal: 20, paddingVertical: 30}}>
     {props.children}
   </View>
 )

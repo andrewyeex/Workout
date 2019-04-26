@@ -23,13 +23,22 @@ const WorkoutInfo = ({
     <TextSubHeader text={description} />
     <View style={{flex: 4, padding: 40}}>
       <TextList>
+        <View style={{height: 20, flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#555', marginBottom: 12}}>
+          <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>#</Text>
+          <Text style={{flex: 4, fontWeight: '100', color: '#555'}}>Activities</Text>
+          <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>Sec</Text>
+        </View>
         {selectedWorkoutActivities.map(
           ({order, duration, id}) =>
-            <Text key={order}>{order}. {activities[id].name} {duration}s</Text>
+            <View key={order} style={{height: 20, flexDirection: 'row'}}>
+              <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>{order}.</Text>
+              <Text style={{flex: 4, fontWeight: '100', color: '#555'}}>{activities[id].name}</Text>
+              <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>{duration}s</Text>
+            </View>
         )}
       </TextList>
     </View>
-    <View style={{padding: 10, flex: 1}}>
+    <View style={{padding: 20, flex: 1}}>
       <Button text={'Begin'} callback={handleBeginWorkout} />
     </View>
   </View>

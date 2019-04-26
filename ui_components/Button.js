@@ -3,14 +3,14 @@ import { TouchableOpacity, Text } from 'react-native'
 
 const Button = ({
   text,
-  type = 'success',
+  type = 'information',
   callback
 }) => (
   <TouchableOpacity
     onPress={callback}
     style={{
       backgroundColor: typeColorMapper[type],
-      borderRadius: 10,
+      borderRadius: 3,
       height: 40,
       alignItems: 'center'}}>
     <Text style={{lineHeight: 40, color: '#fff', fontWeight: '600'}}>{text}</Text>

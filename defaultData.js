@@ -40,7 +40,7 @@ const defaultData = {
       ],
       "activities": {
         "12sdgfna83" : {
-          "name": "break",
+          "name": "Break",
           "description": "relax and recover",
           "youtube": "https://www.youtube.com/watch?v=n9e7esJj6Hw"
         },

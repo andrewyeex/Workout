@@ -15,6 +15,7 @@ const CreateAdd = ({
   handleModeChange,
   handleAddActivities,
   handleRemoveActivities,
+  handleSetState,
   addSelectedType,
   addTextInputValue,
   addTextInputDescription,
@@ -23,6 +24,7 @@ const CreateAdd = ({
 }) => (
   <View style={{flex: 1}}>
     <TextRowLinks
+      isButton={true}
       leftText={'Back'}
       leftTextCallback={()=>handleModeChange(0)}
       rightText={'Save'}
@@ -34,8 +36,8 @@ const CreateAdd = ({
       ]}
       optionSelected={addSelectedType}
       handleOptionSelected={handleUpdateAddSelectedType} />
-    <TextInput value={addTextInputValue} />
-    <TextInput value={addTextInputDescription} />
+    <TextInput value={addTextInputValue} onChangeText={handleSetState} name={'addTextInputValue'} />
+    <TextInput value={addTextInputDescription} onChangeText={handleSetState} name={'addTextInputDescription'} />
     <View style={{flex:1}}>
       {addSelectedType === 'workout' &&
         <CreateAddActivityList
@@ -59,7 +61,7 @@ const CreateAddActivityList = ({
   handleRemoveActivities,
   handleToggleIsAddActivitiesModalVisible
 }) => (
-  <View style={{ padding: 20 }}>
+  <View style={{ padding: 20, marginTop: 10 }}>
     <TouchableOpacity
       onPress={handleToggleIsAddActivitiesModalVisible}
       style={{

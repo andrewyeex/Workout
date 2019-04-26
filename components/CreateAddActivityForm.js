@@ -19,6 +19,7 @@ export default class CreateAddActivityForm extends Component {
         {({ activities }) =>
           <View style={{marginTop: 85, flex: 1, borderTopWidth: 1, borderTopColor: '#ccc'}}>
             <TextRowLinks
+              isButton={true}
               leftText={'Cancel'}
               leftTextCallback={cancel}
               rightText={'Add'}
