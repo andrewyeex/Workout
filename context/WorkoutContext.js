@@ -52,6 +52,22 @@ export class WorkoutProvider extends React.Component {
     }
   }
 
+  append = async (key, toAppend) => {
+    try {
+      await AsyncStorage.getItem(key, (error, value) => {
+        if (!error) {
+          const appendValue = Array.isArray(value) ?
+                                [...value, toAppend] :
+                                {...value}[toAppend.id] = toAppend.value
+          this.set(key, appendValue)
+        }
+        else this.setState(prevState => ({error: [...prevState.error, error]}))
+      })
+    } catch(error) {
+      this.setState(prevState => ({error: [...prevState.error, error]}))
+    }
+  }
+
   render(){
     return this.state.loading ?
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
