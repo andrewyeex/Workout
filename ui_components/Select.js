@@ -10,7 +10,7 @@ const Select = ({
   handleOptionSelected,
   options
 }) => (
-  <View style={{flex: .25, paddingVertical: 10, paddingHorizontal: 20}}>
+  <View style={{paddingVertical: 10, paddingHorizontal: 20}}>
     <PickerSelect
       placeholder={{
         label: placeholder,

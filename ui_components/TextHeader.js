@@ -5,10 +5,11 @@ const TextHeader = ({
   text,
   alignItems = 'center',
   callback,
-  style
+  style,
+  fontStyle
 }) => (
   <TouchableOpacity onPress={callback} style={{flex: .5, alignItems, ...style}}>
-    <Text style={{fontSize: 40, fontWeight: '600'}}>{text}</Text>
+    <Text style={{fontSize: 40, fontWeight: '600', ...fontStyle}}>{text}</Text>
   </TouchableOpacity>
 )
 

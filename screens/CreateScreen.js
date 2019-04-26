@@ -65,9 +65,9 @@ class CreateScreen extends React.Component {
 
 const CreateMenu = ({ handleModeChange }) => (
   <View style={{flex: 1}}>
-    <TextHeader text='ADD'    callback={()=>handleModeChange(1)} style={{justifyContent: 'center'}} />
+    <TextHeader text='ADD'    callback={()=>handleModeChange(1)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}} />
     <TextHeader text='REMOVE' callback={()=>handleModeChange(2)} style={{justifyContent: 'center'}} />
-    <TextHeader text='EDIT'   callback={()=>handleModeChange(3)} style={{justifyContent: 'center'}} />
+    <TextHeader text='EDIT'   callback={()=>handleModeChange(3)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}}  />
   </View>
 )
 
