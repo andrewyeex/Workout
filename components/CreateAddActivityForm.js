@@ -23,7 +23,7 @@ export default class CreateAddActivityForm extends Component {
               leftText={'Cancel'}
               leftTextCallback={cancel}
               rightText={'Add'}
-              rightTextCallback={() => add(this.state)} />
+              rightTextCallback={add(this.state)} />
             <Select
               placeholder={'Select an activity'}
               options={Object.entries(activities).map(([key, {name: label}]) => ({label, value: key, key}))}

@@ -7,12 +7,12 @@ import WorkoutInfo from '../components/WorkoutInfo'
 import { WorkoutContext } from '../context/WorkoutContext'
 
 const imageMapper = {
-  run1: require('../assets/images/run1.jpg'),
-  run2: require('../assets/images/run2.jpg'),
-  run3: require('../assets/images/run3.jpg'),
-  run4: require('../assets/images/run4.jpg'),
-  run5: require('../assets/images/run5.jpg'),
-  run6: require('../assets/images/run6.jpg'),
+  run1:  require('../assets/images/run1.jpg'),
+  run2:  require('../assets/images/run2.jpg'),
+  run3:  require('../assets/images/run3.jpg'),
+  run4:  require('../assets/images/run4.jpg'),
+  run5:  require('../assets/images/run5.jpg'),
+  run6:  require('../assets/images/run6.jpg'),
   lift1: require('../assets/images/lift1.jpg'),
   lift2: require('../assets/images/lift2.jpg'),
   lift3: require('../assets/images/lift3.jpg'),
@@ -24,7 +24,7 @@ const imageMapper = {
 export default class WorkoutScreen extends Component {
   static navigationOptions = {
     title: 'Workout',
-  };
+  }
 
   state = {
     selectedWorkout: {},

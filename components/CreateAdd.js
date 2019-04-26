@@ -1,13 +1,13 @@
 import React from 'react'
+import Icon from 'expo/build/Icon'
 import { View, TouchableOpacity, Modal, Text} from 'react-native'
 
 import CreateAddActivityForm from './CreateAddActivityForm'
+import TextSubHeader from '../ui_components/TextSubHeader'
 import TextRowLinks from '../ui_components/TextRowLinks'
 import TextInput from '../ui_components/TextInput'
 import TextList from '../ui_components/TextList'
 import Select from '../ui_components/Select'
-import Icon from 'expo/build/Icon';
-import TextSubHeader from '../ui_components/TextSubHeader'
 
 const CreateAdd = ({
   handleToggleIsAddActivitiesModalVisible,
@@ -15,7 +15,7 @@ const CreateAdd = ({
   handleModeChange,
   handleAddActivities,
   handleRemoveActivities,
-  handleSetState,
+  handleOnChangeText,
   addSelectedType,
   addTextInputValue,
   addTextInputDescription,
@@ -26,7 +26,7 @@ const CreateAdd = ({
     <TextRowLinks
       isButton={true}
       leftText={'Back'}
-      leftTextCallback={()=>handleModeChange(0)}
+      leftTextCallback={handleModeChange(0)}
       rightText={'Save'}
       rightTextCallback={()=>{}} />
     <Select
@@ -36,8 +36,8 @@ const CreateAdd = ({
       ]}
       optionSelected={addSelectedType}
       handleOptionSelected={handleUpdateAddSelectedType} />
-    <TextInput value={addTextInputValue} onChangeText={handleSetState} name={'addTextInputValue'} />
-    <TextInput value={addTextInputDescription} onChangeText={handleSetState} name={'addTextInputDescription'} />
+    <TextInput value={addTextInputValue} onChangeText={handleOnChangeText('addTextInputValue')} placeholder='Enter a name'/>
+    <TextInput value={addTextInputDescription} onChangeText={handleOnChangeText('addTextInputDescription')} placeholder='Enter a description' />
     <View style={{flex:1}}>
       {addSelectedType === 'workout' &&
         <CreateAddActivityList

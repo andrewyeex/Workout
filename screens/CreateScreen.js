@@ -9,19 +9,17 @@ class CreateScreen extends React.Component {
   state = {
     mode: 0,
     addSelectedType: 'workout',
-    addTextInputValue: 'Enter A Name',
-    addTextInputDescription: 'Enter A Description',
+    addTextInputValue: '',
+    addTextInputDescription: '',
     addActivitiesCollection: [],
     isAddActivitiesModalVisible: false
   }
 
-  handleModeChange = mode => this.setState({ mode })
+  handleModeChange = mode => () => this.setState({ mode })
   handleUpdateAddSelectedType = (type, index) => this.setState({ addSelectedType: type })
   handleToggleIsAddActivitiesModalVisible = () => this.setState(prevState => ({isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible }))
-
-  handleSetState = (e) => console.log({e: e.nativeEvent})//this.setState({[key]: value})
-
-  handleAddActivities = activity => this.setState(prevState => ({
+  handleOnChangeText = key => text => this.setState({[key]: text})
+  handleAddActivities = activity => () => this.setState(prevState => ({
     addActivitiesCollection: [...prevState.addActivitiesCollection, activity],
     isAddActivitiesModalVisible: !prevState.isAddActivitiesModalVisible
   }))
@@ -43,7 +41,7 @@ class CreateScreen extends React.Component {
       handleModeChange,
       handleAddActivities,
       handleRemoveActivities,
-      handleSetState
+      handleOnChangeText
     } = this
 
     const createAddProps = {
@@ -52,7 +50,7 @@ class CreateScreen extends React.Component {
       handleModeChange,
       handleAddActivities,
       handleRemoveActivities,
-      handleSetState,
+      handleOnChangeText,
       addSelectedType,
       addTextInputValue,
       addTextInputDescription,
@@ -70,9 +68,9 @@ class CreateScreen extends React.Component {
 
 const CreateMenu = ({ handleModeChange }) => (
   <View style={{flex: 1}}>
-    <TextHeader text='ADD'    callback={()=>handleModeChange(1)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}} />
-    <TextHeader text='REMOVE' callback={()=>handleModeChange(2)} style={{justifyContent: 'center'}} />
-    <TextHeader text='EDIT'   callback={()=>handleModeChange(3)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}}  />
+    <TextHeader text='ADD'    callback={handleModeChange(1)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}} />
+    <TextHeader text='REMOVE' callback={handleModeChange(2)} style={{justifyContent: 'center'}} />
+    <TextHeader text='EDIT'   callback={handleModeChange(3)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}}  />
   </View>
 )
 
