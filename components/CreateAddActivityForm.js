@@ -9,9 +9,11 @@ export default class CreateAddActivityForm extends Component {
     activitySelected: '',
     timeInSeconds: ''
   }
-  handleActivitySelected = activitySelected => this.setState({ activitySelected })
-  handleTimeInSecondsSelected = timeInSeconds => this.setState({ timeInSeconds })
+
+  _setState = state => value => () => this.setState({[state]: value})
+
   render(){
+    const { _setState } = this
     const { closeModal, addActivity } = this.props
     const { activitySelected, timeInSeconds } = this.state
     return(
@@ -28,7 +30,7 @@ export default class CreateAddActivityForm extends Component {
               placeholder={'Select an activity'}
               options={Object.entries(activities).map(([key, {name: label}]) => ({label, value: {key, label}, key}))}
               optionSelected={activitySelected}
-              handleOptionSelected={this.handleActivitySelected} />
+              handleOptionSelected={_setState('activitySelected')} />
             <Select
               placeholder={'Select a time in seconds'}
               options={
@@ -36,7 +38,7 @@ export default class CreateAddActivityForm extends Component {
                   '75', '90', '105', '120',
                   '135', '150', '165', '180'].map(s => ({label: s, value: s, key: s}))}
               optionSelected={timeInSeconds}
-              handleOptionSelected={this.handleTimeInSecondsSelected} />
+              handleOptionSelected={_setState('timeInSeconds')} />
           </View>}
       </WorkoutContext.Consumer>
     )

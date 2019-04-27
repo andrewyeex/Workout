@@ -47,7 +47,7 @@ export default class WorkoutScreen extends Component {
           }) => (
             <WorkoutCard
               key={id}
-              image={imageMapper[image]}
+              image={image.length < 6 ? imageMapper[image] : {uri: image}}
               name={name}
               description={description}
               activities={activities}

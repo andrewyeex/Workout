@@ -20,7 +20,7 @@ const Select = ({
       style={{...pickerStyle, ...style}}
       value={optionSelected}
       Icon={() => <Icon.Ionicons name='ios-arrow-down' size={24} />}
-      onValueChange={handleOptionSelected}
+      onValueChange={selected => handleOptionSelected(selected)()}
       items={options} />
   </View>
 )

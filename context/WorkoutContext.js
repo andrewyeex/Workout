@@ -7,6 +7,45 @@ export const WorkoutContext = React.createContext()
 
 const APP_KEYS = ['workouts', 'activities', 'completed']
 const APP_RESET = [['workouts', ''], ['activities', ''], ['completed', '']]
+const UUID = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      const r = (new Date().getTime() + Math.random() * 16) % 16 | 0
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+  })
+}
+
+const obj = {
+  "activities":  [
+    {
+      "activitySelected":  {
+        "key": "12sdgfna83",
+        "label": "Break",
+      },
+      "timeInSeconds": "15",
+    },
+    {
+      "activitySelected":  {
+        "key": "d8f23nf78a",
+        "label": "Push Up",
+      },
+      "timeInSeconds": "45",
+    },
+    {
+      "activitySelected":  {
+        "key": "d8f23nf78a",
+        "label": "Push Up",
+      },
+      "timeInSeconds": "30",
+    },
+  ],
+  "description": "Testing",
+  "duration": 90,
+  "id": "",
+  "image": "file:///var/mobile/Containers/Data/Application/AA0EFA33-3C9F-4EEE-8F01-21930B428363/Library/Caches/ExponentExperienceData/%2540anonymous%252Fworkout-fc9938e4-7bef-4534-a89f-a94f7122bff9/ImagePicker/4B1AD950-BB5B-4FA1-BEB0-31BD620CD3B7.jpg",
+  "name": "Dummy",
+}
+
+
 export class WorkoutProvider extends React.Component {
   state = {
     loading: true,
@@ -20,6 +59,7 @@ export class WorkoutProvider extends React.Component {
 
   initialize = async () => {
     await AsyncStorage.multiGet(APP_KEYS, (err, stores) => {
+      console.log({ stores })
       for (const [key, value] of stores) {
         if (!value) this.set(key)
         else this.setState({[key]: JSON.parse(value)})
@@ -52,13 +92,17 @@ export class WorkoutProvider extends React.Component {
     }
   }
 
-  append = async (key, toAppend) => {
+  append = key => toAppend => async () => {
+    // workout object
+    toAppend.activities = [...toAppend.activities].map(({activitySelected : {key : id}, timeInSeconds : duration}, order) => ({ id, order: order+1, duration: +duration }))
+    toAppend.id = UUID()
     try {
       await AsyncStorage.getItem(key, (error, value) => {
         if (!error) {
-          const appendValue = Array.isArray(value) ?
-                                [...value, toAppend] :
-                                {...value}[toAppend.id] = toAppend.value
+          value = JSON.parse(value)
+          const appendValue = Array.isArray(value) ? [...value, toAppend] : value
+          if (typeof appendValue === 'object') appendValue[toAppend.id] = toAppend.value
+          // console.log({ key, value,  appendValue })
           this.set(key, appendValue)
         }
         else this.setState(prevState => ({error: [...prevState.error, error]}))
@@ -73,7 +117,7 @@ export class WorkoutProvider extends React.Component {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Progress.Circle size={120} indeterminate={true} borderWidth={5} />
       </View> :
-      <WorkoutContext.Provider value={this.state}>
+      <WorkoutContext.Provider value={{...this.state, append: this.append}}>
         {this.props.children}
       </WorkoutContext.Provider>
   }

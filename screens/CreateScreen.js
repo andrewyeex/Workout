@@ -5,15 +5,6 @@ import { ImagePicker, Permissions } from 'expo'
 import TextHeader from '../ui_components/TextHeader'
 import CreateAdd from '../components/CreateAdd'
 
-function generateUUID() { // Public Domain/MIT
-  var d = new Date().getTime()
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (d + Math.random() * 16) % 16 | 0
-      d = Math.floor(d / 16)
-      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
-  })
-}
-
 class CreateScreen extends React.Component {
   state = {
     mode: 0,
@@ -23,7 +14,7 @@ class CreateScreen extends React.Component {
       id: '',
       name: '',
       description: '',
-      image: '',
+      image: null,
       activities: [],
       duration: 0
     },
@@ -37,10 +28,6 @@ class CreateScreen extends React.Component {
     addSelectedType: 'workout',
   }
 
-  handleCreateWorkout = () => {
-    const workout = { id: generateUUID(), ...this.state.addWorkoutObj }
-  }
-
   _setStateObj = state => key => value => this.setState(prevState => ({
     [state]: {...prevState[state], [key]: value }
   }))
@@ -50,14 +37,8 @@ class CreateScreen extends React.Component {
   handleImagePicker = async () => {
     const permission = await this.handleCameraPermission()
     if (permission) {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [4, 3],
-      })
-      console.log(result)
-      if (!result.cancelled) {
-        this.setState({ image: result.uri })
-      }
+      const result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 3] })
+      if (!result.cancelled) this._setStateObj('addWorkoutObj')('image')(result.uri)
     }
   }
 
@@ -65,12 +46,10 @@ class CreateScreen extends React.Component {
     const { status } = await Permissions.getAsync(Permissions.CAMERA_ROLL)
     if (status !== 'granted') {
       const { status : _status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-      if (_status !== 'granted') {
-        alert('You have not granted Camera permission to EXPO')
-        return false
-      }
-      return true
+      if (_status !== 'granted') alert('You have not granted Camera permission to EXPO')
+      return false
     }
+    return true
   }
 
   handleAddActivities = activity => () => this.setState(prevState => ({
@@ -119,10 +98,10 @@ class CreateScreen extends React.Component {
     }
 
     return(
-      mode === 0 ? <CreateMenu _setState={_setState} /> :
-      mode === 1 ? <CreateAdd {...createAddProps} /> :
-      mode === 2 ? this.renderRemovePage() :
-      mode === 3 ? this.renderEditPage() : this.renderErrorPage()
+      mode === 0 ? <CreateMenu _setState={_setState} /> : <CreateAdd {...createAddProps} /> 
+      // mode === 1 ? <CreateAdd {...createAddProps} /> :
+      // mode === 2 ? this.renderRemovePage() :
+      // mode === 3 ? this.renderEditPage() : this.renderErrorPage()
     )
   }
 }

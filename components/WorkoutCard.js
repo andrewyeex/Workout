@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { ImageBackground, Text, View, TouchableOpacity} from 'react-native'
 
 export class WorkoutCard extends React.PureComponent {

@@ -23,7 +23,7 @@ const CreateAddActivityList = ({
       <TextSubHeader text='Add Activities' fontStyle={{color: '#fff'}} />
     </TouchableOpacity>
     {!!activities.length &&
-      <ScrollView>
+      <ScrollView style={{height: 100}}>
         <TextList>
           {activities.map(({
             activitySelected,
