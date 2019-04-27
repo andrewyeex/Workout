@@ -15,27 +15,27 @@ const SelectOptions = [
 ]
 
 const CreateAdd = ({
-  handleUpdateStateObj,
+  _setState,
+  _setStateObj,
   addWorkoutObj,
   addActivityObj,
+  addSelectedType,
   handleImagePicker,
-  handleUpdateState,
   handleAddActivities,
   handleRemoveActivities,
-  addSelectedType,
   isAddWorkoutActivitiesModalVisible
 }) => (
   <View style={{flex: 1}}>
     <TextRowLinks
       isButton={true}
       leftText={'Back'}
-      leftTextCallback={handleUpdateState('mode')(0)}
+      leftTextCallback={_setState('mode')(0)}
       rightText={'Save'}
       rightTextCallback={()=>{}} />
     <Select
       options={SelectOptions}
       optionSelected={addSelectedType}
-      handleOptionSelected={handleUpdateState('addSelectedType')} />
+      handleOptionSelected={_setState('addSelectedType')} />
     {addSelectedType === 'workout' &&
       <View style={{ padding: 20, marginTop: 10 }}>
         <TouchableOpacity
@@ -53,17 +53,17 @@ const CreateAdd = ({
     <TextInput
       placeholder='Enter a name'
       value={addWorkoutObj.name}
-      onChangeText={handleUpdateStateObj('addWorkoutObj')('name')} />
+      onChangeText={_setStateObj('addWorkoutObj')('name')} />
     <TextInput
       placeholder='Enter a description'
       value={addWorkoutObj.description}
-      onChangeText={handleUpdateStateObj('addWorkoutObj')('description')}  />
+      onChangeText={_setStateObj('addWorkoutObj')('description')}  />
     <View style={{flex:1}}>
       {addSelectedType === 'workout' &&
         <CreateAddActivityList
           activities={addWorkoutObj.activities}
           removeActivity={handleRemoveActivities}
-          openModal={handleUpdateState('isAddWorkoutActivitiesModalVisible')(true)} />}
+          openModal={_setState('isAddWorkoutActivitiesModalVisible')(true)} />}
     </View>
     <Modal
       animationType='slide'
@@ -71,7 +71,7 @@ const CreateAdd = ({
       visible={isAddWorkoutActivitiesModalVisible}>
       <CreateAddActivityForm
         addActivity={handleAddActivities}
-        closeModal={handleUpdateState('isAddWorkoutActivitiesModalVisible')(false)} />
+        closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />
     </Modal>
   </View>
 )

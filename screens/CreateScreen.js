@@ -41,11 +41,11 @@ class CreateScreen extends React.Component {
     const workout = { id: generateUUID(), ...this.state.addWorkoutObj }
   }
 
-  handleUpdateStateObj = state => key => value => this.setState(prevState => ({
+  _setStateObj = state => key => value => this.setState(prevState => ({
     [state]: {...prevState[state], [key]: value }
   }))
 
-  handleUpdateState = state => value => () => this.setState({ [state]: value })
+  _setState = state => value => () => this.setState({ [state]: value })
 
   handleImagePicker = async () => {
     const permission = await this.handleCameraPermission()
@@ -99,28 +99,27 @@ class CreateScreen extends React.Component {
     } = this.state
 
     const {
-      handleUpdateState,
-      handleUpdateStateObj,
-      handleUpdateState,
+      _setState,
+      _setStateObj,
       handleAddActivities,
       handleRemoveActivities,
       handleImagePicker
     } = this
 
     const createAddProps = {
-      handleImagePicker,
-      handleUpdateState,
+      _setState,
+      _setStateObj,
       handleAddActivities,
       handleRemoveActivities,
+      handleImagePicker,
       addSelectedType,
-      handleUpdateStateObj,
       addWorkoutObj,
       addActivityObj,
       isAddWorkoutActivitiesModalVisible
     }
 
     return(
-      mode === 0 ? <CreateMenu handleUpdateState={handleUpdateState} /> :
+      mode === 0 ? <CreateMenu _setState={_setState} /> :
       mode === 1 ? <CreateAdd {...createAddProps} /> :
       mode === 2 ? this.renderRemovePage() :
       mode === 3 ? this.renderEditPage() : this.renderErrorPage()
@@ -128,11 +127,11 @@ class CreateScreen extends React.Component {
   }
 }
 
-const CreateMenu = ({ handleUpdateState }) => (
+const CreateMenu = ({ _setState }) => (
   <View style={{flex: 1}}>
-    <TextHeader text='ADD'    callback={handleUpdateState('mode')(1)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}} />
-    <TextHeader text='REMOVE' callback={handleUpdateState('mode')(2)} style={{justifyContent: 'center'}} />
-    <TextHeader text='EDIT'   callback={handleUpdateState('mode')(3)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}}  />
+    <TextHeader text='ADD'    callback={_setState('mode')(1)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}} />
+    <TextHeader text='REMOVE' callback={_setState('mode')(2)} style={{justifyContent: 'center'}} />
+    <TextHeader text='EDIT'   callback={_setState('mode')(3)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}}  />
   </View>
 )
 
