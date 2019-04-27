@@ -6,13 +6,13 @@ import TextSubHeader from '../ui_components/TextSubHeader'
 import TextList from '../ui_components/TextList'
 
 const CreateAddActivityList = ({
-  addActivitiesCollection,
-  handleRemoveActivities,
-  handleToggleIsAddActivitiesModalVisible
+  activities,
+  removeActivity,
+  openModal
 }) => (
   <View style={{ padding: 20, marginTop: 10 }}>
     <TouchableOpacity
-      onPress={handleToggleIsAddActivitiesModalVisible}
+      onPress={openModal}
       style={{
         paddingHorizontal: 10,
         flexDirection: 'row',
@@ -22,15 +22,15 @@ const CreateAddActivityList = ({
       <Ionicons name='ios-add-circle-outline' size={24} color={'#fff'} />
       <TextSubHeader text='Add Activities' fontStyle={{color: '#fff'}} />
     </TouchableOpacity>
-    {!!addActivitiesCollection.length &&
+    {!!activities.length &&
       <ScrollView>
         <TextList>
-          {addActivitiesCollection.map(({
+          {activities.map(({
             activitySelected,
             timeInSeconds
           }, i) => (
             <View key={i} style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{flex: 1 }} onPress={handleRemoveActivities(i)}>
+              <TouchableOpacity style={{flex: 1 }} onPress={removeActivity(i)}>
                 <Ionicons name='ios-remove-circle' size={24} />
               </TouchableOpacity>
               <Text style={{flex: 1, lineHeight: 24, paddingLeft: 10}} >{activitySelected.label}</Text>

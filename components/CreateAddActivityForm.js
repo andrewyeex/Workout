@@ -12,7 +12,7 @@ export default class CreateAddActivityForm extends Component {
   handleActivitySelected = activitySelected => this.setState({ activitySelected })
   handleTimeInSecondsSelected = timeInSeconds => this.setState({ timeInSeconds })
   render(){
-    const { cancel, add } = this.props
+    const { closeModal, addActivity } = this.props
     const { activitySelected, timeInSeconds } = this.state
     return(
       <WorkoutContext.Consumer>
@@ -21,9 +21,9 @@ export default class CreateAddActivityForm extends Component {
             <TextRowLinks
               isButton={true}
               leftText={'Cancel'}
-              leftTextCallback={cancel}
+              leftTextCallback={closeModal}
               rightText={'Add'}
-              rightTextCallback={add(this.state)} />
+              rightTextCallback={addActivity(this.state)} />
             <Select
               placeholder={'Select an activity'}
               options={Object.entries(activities).map(([key, {name: label}]) => ({label, value: {key, label}, key}))}

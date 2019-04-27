@@ -6,17 +6,18 @@ import TextHeader from '../ui_components/TextHeader'
 import CreateAdd from '../components/CreateAdd'
 
 function generateUUID() { // Public Domain/MIT
-  var d = new Date().getTime();
+  var d = new Date().getTime()
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-  });
+      var r = (d + Math.random() * 16) % 16 | 0
+      d = Math.floor(d / 16)
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+  })
 }
 
 class CreateScreen extends React.Component {
   state = {
     mode: 0,
+    // ADD STATES
     isAddWorkoutActivitiesModalVisible: false,
     addWorkoutObj : {
       id: '',
@@ -32,30 +33,19 @@ class CreateScreen extends React.Component {
       description: '',
       youtube: ''
     },
+    addImageSelected: null,
     addSelectedType: 'workout',
-    // addTextInputValue: '',
-    // addTextInputDescription: '',
-    // addActivitiesCollection: [],
-    // addActivitiesDuration: 0,
-    // addImageSelected: null
   }
 
   handleCreateWorkout = () => {
-    const workout = {
-      id: generateUUID(),
-      name: this.state.addTextInputValue,
-      description: this.state.addTextInputDescription,
-      activities: this.state.addActivitiesCollection,
-      image: this.state.addImageSelected,
-      duration: this.state.addActivitiesDuration
-    }
+    const workout = { id: generateUUID(), ...this.state.addWorkoutObj }
   }
 
   handleUpdateStateObj = state => key => value => this.setState(prevState => ({
     [state]: {...prevState[state], [key]: value }
   }))
 
-  handleUpdateState = state => value => this.setState({ [state]: value })
+  handleUpdateState = state => value => () => this.setState({ [state]: value })
 
   handleImagePicker = async () => {
     const permission = await this.handleCameraPermission()
@@ -83,19 +73,21 @@ class CreateScreen extends React.Component {
     }
   }
 
-  handleModeChange = mode => () => this.setState({ mode })
-  handleUpdateAddSelectedType = addSelectedType => this.setState({ addSelectedType })
-  handleToggleIsAddWorkoutActivitiesModalVisible = () => this.setState(prevState => ({isAddWorkoutActivitiesModalVisible: !prevState.isAddWorkoutActivitiesModalVisible }))
-  handleOnChangeText = key => text => this.setState({[key]: text})
-  handleAddActivities = activity => () => this.setState(prevState => {
-    const addActivitiesCollection = [...prevState.addActivitiesCollection, activity]
-    return {
-      addActivitiesCollection,
-      // addActivitiesDuration: addActivitiesCollection.reduce((curr, prev) => curr + prev),
-      isAddWorkoutActivitiesModalVisible: !prevState.isAddWorkoutActivitiesModalVisible
-    }}
-  )
-  handleRemoveActivities = index => () => this.setState(prevState => ({ addActivitiesCollection: [...prevState.addActivitiesCollection].filter((v,i) => i !== index)}))
+  handleAddActivities = activity => () => this.setState(prevState => ({
+    isAddWorkoutActivitiesModalVisible: false,
+    addWorkoutObj: {
+      ...prevState.addWorkoutObj,
+      activities: [...prevState.addWorkoutObj.activities, activity],
+      duration: [...prevState.addWorkoutObj.activities, activity].reduce((acc, curr) => +acc + +curr['timeInSeconds'], 0)
+    }
+  }))
+
+  handleRemoveActivities = index => () => this.setState(prevState => ({
+    addWorkoutObj: {
+      ...prevState.addWorkoutObj,
+      activities: [...prevState.addWorkoutObj.activities].filter((v,i) => i !== index)
+    }
+  }))
 
   render(){
     const {
@@ -103,35 +95,24 @@ class CreateScreen extends React.Component {
       addWorkoutObj,
       addActivityObj,
       addSelectedType,
-      // addTextInputValue,
-      // addTextInputDescription,
-      // addActivitiesCollection,
       isAddWorkoutActivitiesModalVisible
     } = this.state
 
     const {
+      handleUpdateState,
       handleUpdateStateObj,
-      handleToggleIsAddWorkoutActivitiesModalVisible,
-      handleUpdateAddSelectedType,
-      handleModeChange,
+      handleUpdateState,
       handleAddActivities,
       handleRemoveActivities,
-      handleOnChangeText,
       handleImagePicker
     } = this
 
     const createAddProps = {
-      // handleImagePicker,
-      handleToggleIsAddWorkoutActivitiesModalVisible,
-      handleUpdateAddSelectedType,
-      handleModeChange,
-      // handleAddActivities,
-      // handleRemoveActivities,
-      // handleOnChangeText,
+      handleImagePicker,
+      handleUpdateState,
+      handleAddActivities,
+      handleRemoveActivities,
       addSelectedType,
-      // addTextInputValue,
-      // addTextInputDescription,
-      // addActivitiesCollection,
       handleUpdateStateObj,
       addWorkoutObj,
       addActivityObj,
@@ -139,7 +120,7 @@ class CreateScreen extends React.Component {
     }
 
     return(
-      mode === 0 ? <CreateMenu handleModeChange={this.handleModeChange} /> :
+      mode === 0 ? <CreateMenu handleUpdateState={handleUpdateState} /> :
       mode === 1 ? <CreateAdd {...createAddProps} /> :
       mode === 2 ? this.renderRemovePage() :
       mode === 3 ? this.renderEditPage() : this.renderErrorPage()
@@ -147,11 +128,11 @@ class CreateScreen extends React.Component {
   }
 }
 
-const CreateMenu = ({ handleModeChange }) => (
+const CreateMenu = ({ handleUpdateState }) => (
   <View style={{flex: 1}}>
-    <TextHeader text='ADD'    callback={handleModeChange(1)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}} />
-    <TextHeader text='REMOVE' callback={handleModeChange(2)} style={{justifyContent: 'center'}} />
-    <TextHeader text='EDIT'   callback={handleModeChange(3)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}}  />
+    <TextHeader text='ADD'    callback={handleUpdateState('mode')(1)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}} />
+    <TextHeader text='REMOVE' callback={handleUpdateState('mode')(2)} style={{justifyContent: 'center'}} />
+    <TextHeader text='EDIT'   callback={handleUpdateState('mode')(3)} fontStyle={{color: '#fff'}} style={{justifyContent: 'center', backgroundColor: '#000'}}  />
   </View>
 )
 
