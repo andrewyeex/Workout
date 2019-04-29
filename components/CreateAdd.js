@@ -1,14 +1,14 @@
 import React from 'react'
-import { View, TouchableOpacity, Modal, ImageBackground } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { View, Modal } from 'react-native'
 
 import { WorkoutContext } from '../context/WorkoutContext'
 import CreateAddActivityForm from './CreateAddActivityForm'
 import CreateAddActivityList from './CreateActivityList'
-import TextSubHeader from '../ui_components/TextSubHeader'
+import WorkoutCard from '../components/WorkoutCard'
 import TextRowLinks from '../ui_components/TextRowLinks'
 import TextInput from '../ui_components/TextInput'
 import Select from '../ui_components/Select'
+import ButtonInput from '../ui_components/ButtonInput'
 
 const SelectOptions = [
   {label: 'Workout', value: 'workout', key: 'workout'},
@@ -29,7 +29,7 @@ const CreateAdd = ({
   <View style={{flex: 1}}>
 
     <WorkoutContext.Consumer>
-    {({append}) =>
+      {({append}) =>
       <TextRowLinks
         isButton={true}
         leftText={'Back'}
@@ -55,31 +55,18 @@ const CreateAdd = ({
 
     {addSelectedType === 'workout' &&
       <View style={{flex:1}}>
-        <View>
-          <CreateAddActivityList
-            activities={addWorkoutObj.activities}
-            removeActivity={handleRemoveActivities}
-            openModal={_setState('isAddWorkoutActivitiesModalVisible')(true)} />
-        </View>
-        <View style={{ padding: 20 }}>
-          <TouchableOpacity
-            onPress={handleImagePicker}
-            style={{
-              paddingHorizontal: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: '#000',
-              height: 50 }}>
-            <Ionicons name='ios-images' size={24} color={'#fff'} />
-            <TextSubHeader text='Select an Image' fontStyle={{color: '#fff'}} />
-          </TouchableOpacity>
-        </View>
-        <View style={{marginBottom: 10, paddingHorizontal: 20 }}>
-          <ImageBackground
-            source={{uri: addWorkoutObj.image ? addWorkoutObj.image : 'https://via.placeholder.com/400?text=image'}}
-            style={{height: 150, marginBottom: 10}}
-            imageStyle={{borderRadius: 10}} />
-        </View>
+        <ButtonInput
+          onPress={_setState('isAddWorkoutActivitiesModalVisible')(true)}
+          iconName='ios-add-circle-outline'
+          text='Add Activities' />
+        <CreateAddActivityList
+          activities={addWorkoutObj.activities}
+          removeActivity={handleRemoveActivities} />
+        <ButtonInput
+          onPress={handleImagePicker}
+          iconName='ios-images'
+          text='Select an Image' />
+        <WorkoutCard image={{ uri: addWorkoutObj.image }} />
       </View>}
 
     <Modal

@@ -12,10 +12,11 @@ export class WorkoutCard extends React.PureComponent {
     return (
       <TouchableOpacity style={{marginBottom: 10, padding: 10 }} onPress={this.handleSelectedWorkout}>
         <ImageBackground source={image} style={{height: 150, marginBottom: 10}} imageStyle={{borderRadius: 10}} />
-        <View style={{flexWrap:'wrap', paddingHorizontal: 5}}>
-          <Text style={{marginBottom: 5, fontWeight: '600'}}>{name}</Text>
-          <Text style={{fontWeight: '100'}}>{description}</Text>
-        </View>
+        {name && description &&
+          <View style={{flexWrap:'wrap', paddingHorizontal: 5}}>
+            <Text style={{marginBottom: 5, fontWeight: '600'}}>{name}</Text>
+            <Text style={{fontWeight: '100'}}>{description}</Text>
+          </View>}
       </TouchableOpacity>
     )
   }

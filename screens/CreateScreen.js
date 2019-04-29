@@ -18,7 +18,7 @@ class CreateScreen extends React.Component {
       id: '',
       name: '',
       description: '',
-      image: null,
+      image: 'https://via.placeholder.com/400?text=image',
       activities: [],
       duration: 0
     },

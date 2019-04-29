@@ -11,17 +11,6 @@ const CreateAddActivityList = ({
   openModal
 }) => (
   <View style={{ padding: 20, marginTop: 10 }}>
-    <TouchableOpacity
-      onPress={openModal}
-      style={{
-        paddingHorizontal: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#000',
-        height: 50 }}>
-      <Ionicons name='ios-add-circle-outline' size={24} color={'#fff'} />
-      <TextSubHeader text='Add Activities' fontStyle={{color: '#fff'}} />
-    </TouchableOpacity>
     {!!activities.length &&
       <ScrollView style={{height: 100}}>
         <TextList>
