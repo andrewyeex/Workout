@@ -27,6 +27,7 @@ const CreateAdd = ({
   isAddWorkoutActivitiesModalVisible
 }) => (
   <View style={{flex: 1}}>
+
     <WorkoutContext.Consumer>
     {({append}) =>
       <TextRowLinks
@@ -36,46 +37,51 @@ const CreateAdd = ({
         rightText={'Save'}
         rightTextCallback={addSelectedType === 'workout' ? append('workouts')(addWorkoutObj) : append('activities')(addActivityObj)} />}
     </WorkoutContext.Consumer>
+
     <Select
       options={SelectOptions}
       optionSelected={addSelectedType}
       handleOptionSelected={_setState('addSelectedType')} />
+
     <TextInput
       placeholder='Enter a name'
       value={addSelectedType === 'workout' ? addWorkoutObj.name : addActivityObj.name}
       onChangeText={_setStateObj(addSelectedType === 'workout' ? 'addWorkoutObj' : 'addActivityObj')('name')} />
+
     <TextInput
       placeholder='Enter a description'
       value={addSelectedType === 'workout' ? addWorkoutObj.description : addActivityObj.description}
       onChangeText={_setStateObj(addSelectedType === 'workout' ? 'addWorkoutObj' : 'addActivityObj')('description')}  />
+
     {addSelectedType === 'workout' &&
-    <View style={{flex:1}}>
-      <View>
-        <CreateAddActivityList
-          activities={addWorkoutObj.activities}
-          removeActivity={handleRemoveActivities}
-          openModal={_setState('isAddWorkoutActivitiesModalVisible')(true)} />
-      </View>
-      <View style={{ padding: 20 }}>
-        <TouchableOpacity
-          onPress={handleImagePicker}
-          style={{
-            paddingHorizontal: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: '#000',
-            height: 50 }}>
-          <Ionicons name='ios-images' size={24} color={'#fff'} />
-          <TextSubHeader text='Select an Image' fontStyle={{color: '#fff'}} />
-        </TouchableOpacity>
-      </View>
-      <View style={{marginBottom: 10, paddingHorizontal: 20 }}>
-        <ImageBackground
-          source={{uri: addWorkoutObj.image ? addWorkoutObj.image : 'https://via.placeholder.com/400?text=image'}}
-          style={{height: 150, marginBottom: 10}}
-          imageStyle={{borderRadius: 10}} />
-      </View>
-    </View>}
+      <View style={{flex:1}}>
+        <View>
+          <CreateAddActivityList
+            activities={addWorkoutObj.activities}
+            removeActivity={handleRemoveActivities}
+            openModal={_setState('isAddWorkoutActivitiesModalVisible')(true)} />
+        </View>
+        <View style={{ padding: 20 }}>
+          <TouchableOpacity
+            onPress={handleImagePicker}
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: '#000',
+              height: 50 }}>
+            <Ionicons name='ios-images' size={24} color={'#fff'} />
+            <TextSubHeader text='Select an Image' fontStyle={{color: '#fff'}} />
+          </TouchableOpacity>
+        </View>
+        <View style={{marginBottom: 10, paddingHorizontal: 20 }}>
+          <ImageBackground
+            source={{uri: addWorkoutObj.image ? addWorkoutObj.image : 'https://via.placeholder.com/400?text=image'}}
+            style={{height: 150, marginBottom: 10}}
+            imageStyle={{borderRadius: 10}} />
+        </View>
+      </View>}
+
     <Modal
       animationType='slide'
       transparent={false}
@@ -84,6 +90,7 @@ const CreateAdd = ({
         addActivity={handleAddActivities}
         closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />
     </Modal>
+
   </View>
 )
 
