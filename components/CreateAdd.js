@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Modal } from 'react-native'
+import { View, Modal, StyleSheet } from 'react-native'
 
 import { WorkoutContext } from '../context/WorkoutContext'
 import CreateAddActivityForm from './CreateAddActivityForm'
@@ -26,7 +26,7 @@ const CreateAdd = ({
   handleRemoveActivities,
   isAddWorkoutActivitiesModalVisible
 }) => (
-  <View style={{flex: 1}}>
+  <View style={styles.container}>
 
     <WorkoutContext.Consumer>
       {({append}) =>
@@ -54,7 +54,7 @@ const CreateAdd = ({
       onChangeText={_setStateObj(addSelectedType === 'workout' ? 'addWorkoutObj' : 'addActivityObj')('description')}  />
 
     {addSelectedType === 'workout' &&
-      <View style={{flex:1}}>
+      <View style={styles.workoutButtonContainer}>
         <ButtonInput
           onPress={_setState('isAddWorkoutActivitiesModalVisible')(true)}
           iconName='ios-add-circle-outline'
@@ -73,12 +73,21 @@ const CreateAdd = ({
       animationType='slide'
       transparent={false}
       visible={isAddWorkoutActivitiesModalVisible}>
-      <CreateAddActivityForm
-        addActivity={handleAddActivities}
-        closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />
+      <WorkoutContext.Consumer>
+        {({ activities }) =>
+        <CreateAddActivityForm
+          addActivity={handleAddActivities}
+          activityOptions={Object.entries(activities).map(([key, {name: label}]) => ({label, value: {key, label}, key}))}
+          closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />}
+      </WorkoutContext.Consumer>
     </Modal>
 
   </View>
 )
+
+const styles = StyleSheet.create({
+  container: {flex: 1},
+  workoutButtonContainer: {flex:1}
+})
 
 export default CreateAdd

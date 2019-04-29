@@ -14,38 +14,6 @@ const UUID = () => {
   })
 }
 
-const obj = {
-  "activities":  [
-    {
-      "activitySelected":  {
-        "key": "12sdgfna83",
-        "label": "Break",
-      },
-      "timeInSeconds": "15",
-    },
-    {
-      "activitySelected":  {
-        "key": "d8f23nf78a",
-        "label": "Push Up",
-      },
-      "timeInSeconds": "45",
-    },
-    {
-      "activitySelected":  {
-        "key": "d8f23nf78a",
-        "label": "Push Up",
-      },
-      "timeInSeconds": "30",
-    },
-  ],
-  "description": "Testing",
-  "duration": 90,
-  "id": "",
-  "image": "file:///var/mobile/Containers/Data/Application/AA0EFA33-3C9F-4EEE-8F01-21930B428363/Library/Caches/ExponentExperienceData/%2540anonymous%252Fworkout-fc9938e4-7bef-4534-a89f-a94f7122bff9/ImagePicker/4B1AD950-BB5B-4FA1-BEB0-31BD620CD3B7.jpg",
-  "name": "Dummy",
-}
-
-
 export class WorkoutProvider extends React.Component {
   state = {
     loading: true,

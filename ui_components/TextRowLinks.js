@@ -9,8 +9,22 @@ const TextRowLinks = ({
   rightTextCallback
 }) => (
   <View style={{flexDirection: 'row', padding: 20}}>
-    {leftText  && <TouchableOpacity onPress={leftTextCallback} style={isButton ? style.button : style.textLink}><Text style={{fontWeight: '600', ...(!isButton && {color: '#5998ff'}) }}>{leftText}</Text></TouchableOpacity>}
-    {rightText && <TouchableOpacity onPress={rightTextCallback} style={isButton ? style.button : style.textLink}><Text style={{fontWeight: '600'}}>{rightText}</Text></TouchableOpacity>}
+    {leftText  &&
+      <TouchableOpacity
+        onPress={leftTextCallback}
+        style={isButton ? style.button : style.textLink}>
+        <Text style={{fontWeight: '600', ...(!isButton && {color: '#5998ff'}) }}>
+          {leftText}
+        </Text>
+      </TouchableOpacity>}
+    {rightText &&
+      <TouchableOpacity
+        onPress={rightTextCallback}
+        style={isButton ? style.button : style.textLink}>
+        <Text style={{fontWeight: '600'}}>
+          {rightText}
+        </Text>
+      </TouchableOpacity>}
   </View>
 )
 

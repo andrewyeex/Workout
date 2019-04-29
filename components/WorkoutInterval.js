@@ -31,7 +31,6 @@ export default class WorkoutInterval extends Component {
   })
   handleDecrementProgressCounter = () => this.state.progressCounter > 0 && this.setState(prevState => ({progressCounter: prevState.progressCounter-1}))
   handleToggleShowIntro = () => this.setState(prevState => ({showIntro: !prevState.showIntro}))
-  handleSelectedWorkout = () => this.props.handleSelectedWorkout({})
 
   render() {
     const {
@@ -41,7 +40,10 @@ export default class WorkoutInterval extends Component {
       workoutActivityIndex
     } = this.state
 
-    const { activities } = this.props
+    const {
+      activities,
+      handleSelectedWorkout
+    } = this.props
 
     if (showIntro)
       return <Countdown duration={1} onEnd={this.handleToggleShowIntro} />
@@ -57,6 +59,6 @@ export default class WorkoutInterval extends Component {
           handleDecrementProgressCounter={this.handleDecrementProgressCounter}
           workoutActivitiesLength={this.workoutActivitiesLength} />
       else
-        return <TouchableOpacity onPress={this.handleSelectedWorkout}><Text>Congratulations, you finished!</Text></TouchableOpacity>
+        return <TouchableOpacity onPress={handleSelectedWorkout({})}><Text>Congratulations, you finished!</Text></TouchableOpacity>
   }
 }

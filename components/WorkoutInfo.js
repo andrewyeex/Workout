@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { PureComponent } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 import TextRowLinks from '../ui_components/TextRowLinks'
 import TextHeader from '../ui_components/TextHeader'
@@ -12,36 +12,64 @@ const WorkoutInfo = ({
   selectedWorkout : {
     name,
     description,
-    activities: selectedWorkoutActivities,
+    activities: _act,
     handleSelectedWorkout
   },
   handleBeginWorkout
 }) => (
-  <View style={{flex: 1}}>
-    <TextRowLinks leftText={'Back'} leftTextCallback={()=>handleSelectedWorkout({})} />
+  <View style={styles.container}>
+    <TextRowLinks leftText={'Back'} leftTextCallback={handleSelectedWorkout({})} />
     <TextHeader text={name} />
     <TextSubHeader text={description} />
-    <View style={{flex: 4, padding: 40}}>
+    <View style={styles.containerMid}>
       <TextList>
-        <View style={{height: 20, flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#555', marginBottom: 12}}>
-          <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>#</Text>
-          <Text style={{flex: 4, fontWeight: '100', color: '#555'}}>Activities</Text>
-          <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>Sec</Text>
-        </View>
-        {selectedWorkoutActivities.map(
-          ({order, duration, id}) =>
-            <View key={order} style={{height: 20, flexDirection: 'row'}}>
-              <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>{order}.</Text>
-              <Text style={{flex: 4, fontWeight: '100', color: '#555'}}>{activities[id].name}</Text>
-              <Text style={{flex: 1, fontWeight: '100', color: '#555'}}>{duration}s</Text>
-            </View>
-        )}
+        <TextListRow row={['#','Activities','Sec']} />
+        {_act.map(({order, duration, id}) => <TextListRow key={order} row={[order, activities[id].name, duration+'s']} />)}
       </TextList>
     </View>
-    <View style={{padding: 20, flex: 1}}>
+    <View style={styles.containerBot}>
       <Button text={'Begin'} callback={handleBeginWorkout} />
     </View>
   </View>
 )
+
+class TextListRow extends PureComponent {
+  render(){
+    const { row : [a, b, c] } = this.props
+    return(
+      <View style={styles.textListRow}>
+        <Text style={styles.textList1}>{a}</Text>
+        <Text style={styles.textList2}>{b}</Text>
+        <Text style={styles.textList1}>{c}</Text>
+      </View>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {flex: 1},
+  containerMid: {
+    flex: 4,
+    padding: 40
+  },
+  containerBot : {
+    padding: 20,
+    flex: 1
+  },
+  textList1: {
+    flex: 1,
+    fontWeight: '100',
+    color: '#555'
+  },
+  textList2: {
+    flex: 4,
+    fontWeight: '100',
+    color: '#555'
+  },
+  textListRow: {
+    height: 20,
+    flexDirection: 'row'
+  }
+})
 
 export default WorkoutInfo

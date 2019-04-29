@@ -32,7 +32,7 @@ export default class WorkoutScreen extends Component {
   }
 
   handleBeginWorkout = begin => this.setState({ begin })
-  handleSelectedWorkout = selectedWorkout => this.setState({ selectedWorkout })
+  handleSelectedWorkout = selectedWorkout => () => this.setState({ selectedWorkout })
 
   renderWorkoutMenu = () => (
     <ScrollView style={{flex: 1}}>
@@ -51,7 +51,12 @@ export default class WorkoutScreen extends Component {
               name={name}
               description={description}
               activities={activities}
-              handleSelectedWorkout={this.handleSelectedWorkout} /> )))}
+              handleSelectedWorkout={this.handleSelectedWorkout({
+                name,
+                description,
+                activities,
+                handleSelectedWorkout: this.handleSelectedWorkout
+              })} /> )))}
       </WorkoutContext.Consumer>
     </ScrollView>
   )
