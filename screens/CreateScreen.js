@@ -6,6 +6,10 @@ import TextHeader from '../ui_components/TextHeader'
 import CreateAdd from '../components/CreateAdd'
 
 class CreateScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Create',
+  }
+
   state = {
     mode: 0,
     // ADD STATES

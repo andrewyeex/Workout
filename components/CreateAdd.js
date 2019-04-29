@@ -34,7 +34,7 @@ const CreateAdd = ({
         leftText={'Back'}
         leftTextCallback={_setState('mode')(0)}
         rightText={'Save'}
-        rightTextCallback={append('workouts')(addWorkoutObj)} />}
+        rightTextCallback={addSelectedType === 'workout' ? append('workouts')(addWorkoutObj) : append('activities')(addActivityObj)} />}
     </WorkoutContext.Consumer>
     <Select
       options={SelectOptions}
@@ -42,12 +42,12 @@ const CreateAdd = ({
       handleOptionSelected={_setState('addSelectedType')} />
     <TextInput
       placeholder='Enter a name'
-      value={addWorkoutObj.name}
-      onChangeText={_setStateObj('addWorkoutObj')('name')} />
+      value={addSelectedType === 'workout' ? addWorkoutObj.name : addActivityObj.name}
+      onChangeText={_setStateObj(addSelectedType === 'workout' ? 'addWorkoutObj' : 'addActivityObj')('name')} />
     <TextInput
       placeholder='Enter a description'
-      value={addWorkoutObj.description}
-      onChangeText={_setStateObj('addWorkoutObj')('description')}  />
+      value={addSelectedType === 'workout' ? addWorkoutObj.description : addActivityObj.description}
+      onChangeText={_setStateObj(addSelectedType === 'workout' ? 'addWorkoutObj' : 'addActivityObj')('description')}  />
     {addSelectedType === 'workout' &&
     <View style={{flex:1}}>
       <View>

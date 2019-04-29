@@ -59,7 +59,6 @@ export class WorkoutProvider extends React.Component {
 
   initialize = async () => {
     await AsyncStorage.multiGet(APP_KEYS, (err, stores) => {
-      console.log({ stores })
       for (const [key, value] of stores) {
         if (!value) this.set(key)
         else this.setState({[key]: JSON.parse(value)})
@@ -93,17 +92,20 @@ export class WorkoutProvider extends React.Component {
   }
 
   append = key => toAppend => async () => {
-    // workout object
-    toAppend.activities = [...toAppend.activities].map(({activitySelected : {key : id}, timeInSeconds : duration}, order) => ({ id, order: order+1, duration: +duration }))
-    toAppend.id = UUID()
     try {
       await AsyncStorage.getItem(key, (error, value) => {
         if (!error) {
           value = JSON.parse(value)
-          const appendValue = Array.isArray(value) ? [...value, toAppend] : value
-          if (typeof appendValue === 'object') appendValue[toAppend.id] = toAppend.value
-          // console.log({ key, value,  appendValue })
-          this.set(key, appendValue)
+          toAppend.id = UUID()
+          let { activities, id } = toAppend
+          if (key === 'workouts') {
+            toAppend.activities = [...activities].map(({activitySelected : {key : id}, timeInSeconds : duration}, order) => ({ id, order: order+1, duration: +duration }))
+            value = value.concat(toAppend)
+          } else {
+            value[id] = toAppend
+          }
+          console.log({key, value})
+          this.set(key, value)
         }
         else this.setState(prevState => ({error: [...prevState.error, error]}))
       })
