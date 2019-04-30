@@ -20,10 +20,19 @@ export class WorkoutProvider extends React.Component {
     workouts: [],
     activities: {},
     completed: {},
-    error: []
+    error: [],
+    activitiesOptions: []
   }
 
   componentDidMount = () => this.initialize()
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.activities !== this.state.activities) {
+      this.setState(prevState => ({
+        activitiesOptions: Object.entries(prevState.activities).map(([key, {name: label}]) => ({label, value: {key, label}, key}))
+      }))
+    }
+  }
 
   initialize = async () => {
     await AsyncStorage.multiGet(APP_KEYS, (err, stores) => {
@@ -59,7 +68,7 @@ export class WorkoutProvider extends React.Component {
     }
   }
 
-  append = key => toAppend => async () => {
+  append = ({key, content: toAppend, callback}) => async () => {
     try {
       await AsyncStorage.getItem(key, (error, value) => {
         if (!error) {
@@ -80,6 +89,7 @@ export class WorkoutProvider extends React.Component {
     } catch(error) {
       this.setState(prevState => ({error: [...prevState.error, error]}))
     }
+    typeof callback === 'function' && callback()
   }
 
   render(){

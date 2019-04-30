@@ -29,7 +29,7 @@ class CreateScreen extends React.Component {
       youtube: ''
     },
     addImageSelected: null,
-    addSelectedType: 'workout',
+    isWorkoutSelected: true
   }
 
   _setStateObj = state => key => value => this.setState(prevState => ({
@@ -37,6 +37,10 @@ class CreateScreen extends React.Component {
   }))
 
   _setState = state => value => () => this.setState({ [state]: value })
+
+  baseState = {...this.state}
+
+  handleResetForm = () => this.setState(baseState)
 
   handleImagePicker = async () => {
     const permission = await this.handleCameraPermission()
@@ -77,7 +81,7 @@ class CreateScreen extends React.Component {
       mode,
       addWorkoutObj,
       addActivityObj,
-      addSelectedType,
+      isWorkoutSelected,
       isAddWorkoutActivitiesModalVisible
     } = this.state
 
@@ -86,7 +90,8 @@ class CreateScreen extends React.Component {
       _setStateObj,
       handleAddActivities,
       handleRemoveActivities,
-      handleImagePicker
+      handleImagePicker,
+      handleResetForm
     } = this
 
     const createAddProps = {
@@ -95,10 +100,16 @@ class CreateScreen extends React.Component {
       handleAddActivities,
       handleRemoveActivities,
       handleImagePicker,
-      addSelectedType,
+      handleResetForm,
+      isWorkoutSelected,
       addWorkoutObj,
       addActivityObj,
-      isAddWorkoutActivitiesModalVisible
+      isAddWorkoutActivitiesModalVisible,
+      payload: {
+        key: isWorkoutSelected ? 'workouts' : 'activity',
+        content: isWorkoutSelected ? addWorkoutObj : addActivityObj,
+        callback: handleResetForm
+      }
     }
 
     return(

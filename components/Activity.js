@@ -1,10 +1,11 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import * as Progress from 'react-native-progress'
 
 import TextRowLinks from '../ui_components/TextRowLinks'
 import TextHeader from '../ui_components/TextHeader'
 import Countdown from '../ui_components/Countdown'
+import { wrap } from 'module';
 
 const Activity = ({
   activities,
@@ -25,12 +26,12 @@ const Activity = ({
       nextName = activities[nextID].name
     }
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <TextRowLinks
           leftText={`${workoutActivityIndex + 1} of ${workoutActivitiesLength}`}
           rightText={'END'}/>
         <TextHeader text={name.toUpperCase()} />
-        <View style={{flexGrow: 1, alignItems: 'center'}}>
+        <View style={styles.countdownContainer}>
           <Countdown key={order} duration={duration} intervalCallback={handleDecrementProgressCounter} onEnd={handleIncrementWorkoutActivityIndex}/>
         </View>
         <View style={{flexGrow: 3, alignItems: 'center', justifyContent: 'center'}}>
@@ -43,5 +44,17 @@ const Activity = ({
     return (<View></View>)
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  countdownContainer: {
+    alignItems: 'center',
+    height: 100,
+  }
+})
 
 export default Activity
