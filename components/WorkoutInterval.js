@@ -42,7 +42,8 @@ export default class WorkoutInterval extends Component {
 
     const {
       activities,
-      handleSelectedWorkout
+      handleSelectedWorkout,
+      handleEndActivity
     } = this.props
 
     if (showIntro)
@@ -51,6 +52,7 @@ export default class WorkoutInterval extends Component {
       if (progressTotal > 0)
         return <Activity
           activities={activities}
+          handleEndActivity={handleEndActivity}
           workoutActivities={this.workoutActivities}
           workoutActivityIndex={workoutActivityIndex}
           progressCounter={progressCounter}

@@ -40,7 +40,7 @@ class CreateScreen extends React.Component {
 
   baseState = {...this.state}
 
-  handleResetForm = () => this.setState(baseState)
+  handleResetForm = () => this.setState(this.baseState)
 
   handleImagePicker = async () => {
     const permission = await this.handleCameraPermission()
@@ -106,7 +106,7 @@ class CreateScreen extends React.Component {
       addActivityObj,
       isAddWorkoutActivitiesModalVisible,
       payload: {
-        key: isWorkoutSelected ? 'workouts' : 'activity',
+        key: isWorkoutSelected ? 'workouts' : 'activities',
         content: isWorkoutSelected ? addWorkoutObj : addActivityObj,
         callback: handleResetForm
       }

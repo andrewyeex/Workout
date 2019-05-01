@@ -33,6 +33,10 @@ export default class WorkoutScreen extends Component {
 
   handleBeginWorkout = begin => this.setState({ begin })
   handleSelectedWorkout = selectedWorkout => () => this.setState({ selectedWorkout })
+  handleEndActivity = () => this.setState({
+    begin: false,
+    selectedWorkout: {}
+  })
 
   renderWorkoutMenu = () => (
     <ScrollView style={{flex: 1}}>
@@ -67,6 +71,7 @@ export default class WorkoutScreen extends Component {
       this.state.begin ?
       <WorkoutInterval
         activities={activities}
+        handleEndActivity={this.handleEndActivity}
         selectedWorkout={this.state.selectedWorkout}
         handleSelectedWorkout={this.handleSelectedWorkout} /> :
       <WorkoutInfo
