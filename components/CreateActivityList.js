@@ -7,7 +7,6 @@ import TextList from '../ui_components/TextList'
 const CreateAddActivityList = ({ activities, removeActivity }) => (
   <View style={styles.container}>
     {!!activities.length && <ScrollView style={styles.scrollViewContainer}>
-
       <TextList>
         {activities.map(({ activitySelected: {label}, timeInSeconds : duration }, i) =>
           <Row
@@ -17,7 +16,6 @@ const CreateAddActivityList = ({ activities, removeActivity }) => (
             label={label}
             duration={duration}/>)}
       </TextList>
-
     </ScrollView>}
   </View>
 )
@@ -44,7 +42,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   container: {
-    padding: 20,
+    flex: 1,
+    padding: 10,
     marginTop: 10
   },
   listContainer: { flexDirection: 'row' },

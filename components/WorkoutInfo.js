@@ -6,6 +6,7 @@ import TextHeader from '../ui_components/TextHeader'
 import TextSubHeader from '../ui_components/TextSubHeader'
 import TextList from '../ui_components/TextList'
 import Button from '../ui_components/Button'
+import BackArrow from '../ui_components/BackArrow'
 
 const WorkoutInfo = ({
   activities,
@@ -18,7 +19,8 @@ const WorkoutInfo = ({
   handleBeginWorkout
 }) => (
   <View style={styles.container}>
-    <TextRowLinks leftText={'Back'} leftTextCallback={handleSelectedWorkout({})} />
+    <BackArrow onPress={handleSelectedWorkout({})} />
+    {/* <TextRowLinks leftText={'Back'} leftTextCallback={handleSelectedWorkout({})} /> */}
     <TextHeader text={name} />
     <TextSubHeader text={description} />
     <View style={styles.containerMid}>
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
     padding: 40
   },
   containerBot : {
-    padding: 20,
+    padding: 10,
     flex: 1
   },
   textList1: {

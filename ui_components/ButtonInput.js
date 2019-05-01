@@ -9,7 +9,7 @@ const ButtonInput = ({
   iconName,
   text
 }) => (
-  <View style={{ padding: 20 }}>
+  <View style={{ padding: 10 }}>
     <TouchableOpacity
       onPress={onPress}
       style={{

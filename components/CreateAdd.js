@@ -5,10 +5,11 @@ import { WorkoutContext } from '../context/WorkoutContext'
 import CreateAddActivityForm from './CreateAddActivityForm'
 import CreateAddActivityList from './CreateActivityList'
 import WorkoutCard from '../components/WorkoutCard'
-import TextRowLinks from '../ui_components/TextRowLinks'
 import TextInput from '../ui_components/TextInput'
 import Select from '../ui_components/Select'
 import ButtonInput from '../ui_components/ButtonInput'
+import BackArrow from '../ui_components/BackArrow'
+import Button from '../ui_components/Button'
 
 const SelectOptions = [
   {label: 'Workout', value: true, key: 'workout'},
@@ -30,15 +31,7 @@ const CreateAdd = ({
 }) => (
   <View style={styles.container}>
 
-    <WorkoutContext.Consumer>
-      {({append}) =>
-      <TextRowLinks
-        isButton={true}
-        leftText={'Back'}
-        leftTextCallback={_setState('mode')(0)}
-        rightText={'Save'}
-        rightTextCallback={append(payload)} />}
-    </WorkoutContext.Consumer>
+    <BackArrow onPress={_setState('mode')(0)} />
 
     <Select
       options={SelectOptions}
@@ -71,6 +64,12 @@ const CreateAdd = ({
         <WorkoutCard image={{ uri: addWorkoutObj.image }} />
       </View>}
 
+    <View style={styles.containerBot}>
+      <WorkoutContext.Consumer>
+        {({append}) => <Button type='success' text='Save' callback={append(payload)} /> }
+      </WorkoutContext.Consumer>
+    </View>
+
     <Modal
       animationType='slide'
       transparent={false}
@@ -88,8 +87,11 @@ const CreateAdd = ({
 )
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
-  workoutButtonContainer: {flex:1}
+  container: { flex: 1 },
+  workoutButtonContainer: { flex:1 },
+  containerBot : {
+    padding: 10
+  }
 })
 
 export default CreateAdd

@@ -1,6 +1,6 @@
 import React from 'react'
 import { defaultData } from '../defaultData'
-import { View, AsyncStorage } from 'react-native'
+import { View, AsyncStorage, StyleSheet } from 'react-native'
 import * as Progress from 'react-native-progress'
 
 export const WorkoutContext = React.createContext()
@@ -89,7 +89,7 @@ export class WorkoutProvider extends React.Component {
 
   render(){
     return this.state.loading ?
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.container}>
         <Progress.Circle size={120} indeterminate={true} borderWidth={5} />
       </View> :
       <WorkoutContext.Provider value={{...this.state, append: this.append}}>
@@ -97,3 +97,11 @@ export class WorkoutProvider extends React.Component {
       </WorkoutContext.Provider>
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
