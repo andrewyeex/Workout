@@ -11,20 +11,22 @@ import Select from '../ui_components/Select'
 import ButtonInput from '../ui_components/ButtonInput'
 
 const SelectOptions = [
-  {label: 'Workout', value: 'workout', key: 'workout'},
-  {label: 'Activity', value: 'activity', key: 'activity'}
+  {label: 'Workout', value: true, key: 'workout'},
+  {label: 'Activity', value: false, key: 'activity'}
 ]
 
 const CreateAdd = ({
   _setState,
   _setStateObj,
+  payload,
   addWorkoutObj,
   addActivityObj,
   addSelectedType,
   handleImagePicker,
   handleAddActivities,
   handleRemoveActivities,
-  isAddWorkoutActivitiesModalVisible
+  isWorkoutSelected,
+  isAddWorkoutActivitiesModalVisible,
 }) => (
   <View style={styles.container}>
 
@@ -35,25 +37,25 @@ const CreateAdd = ({
         leftText={'Back'}
         leftTextCallback={_setState('mode')(0)}
         rightText={'Save'}
-        rightTextCallback={addSelectedType === 'workout' ? append('workouts')(addWorkoutObj) : append('activities')(addActivityObj)} />}
+        rightTextCallback={append(payload)} />}
     </WorkoutContext.Consumer>
 
     <Select
       options={SelectOptions}
       optionSelected={addSelectedType}
-      handleOptionSelected={_setState('addSelectedType')} />
+      handleOptionSelected={_setState('isWorkoutSelected')} />
 
     <TextInput
       placeholder='Enter a name'
-      value={addSelectedType === 'workout' ? addWorkoutObj.name : addActivityObj.name}
-      onChangeText={_setStateObj(addSelectedType === 'workout' ? 'addWorkoutObj' : 'addActivityObj')('name')} />
+      value={isWorkoutSelected ? addWorkoutObj.name : addActivityObj.name}
+      onChangeText={_setStateObj(isWorkoutSelected ? 'addWorkoutObj' : 'addActivityObj')('name')} />
 
     <TextInput
       placeholder='Enter a description'
-      value={addSelectedType === 'workout' ? addWorkoutObj.description : addActivityObj.description}
-      onChangeText={_setStateObj(addSelectedType === 'workout' ? 'addWorkoutObj' : 'addActivityObj')('description')}  />
+      value={isWorkoutSelected ? addWorkoutObj.description : addActivityObj.description}
+      onChangeText={_setStateObj(isWorkoutSelected ? 'addWorkoutObj' : 'addActivityObj')('description')}  />
 
-    {addSelectedType === 'workout' &&
+    {isWorkoutSelected &&
       <View style={styles.workoutButtonContainer}>
         <ButtonInput
           onPress={_setState('isAddWorkoutActivitiesModalVisible')(true)}
@@ -74,10 +76,10 @@ const CreateAdd = ({
       transparent={false}
       visible={isAddWorkoutActivitiesModalVisible}>
       <WorkoutContext.Consumer>
-        {({ activities }) =>
+        {({ activitiesOptions }) =>
         <CreateAddActivityForm
           addActivity={handleAddActivities}
-          activityOptions={Object.entries(activities).map(([key, {name: label}]) => ({label, value: {key, label}, key}))}
+          activityOptions={activitiesOptions}
           closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />}
       </WorkoutContext.Consumer>
     </Modal>

@@ -20,10 +20,19 @@ export class WorkoutProvider extends React.Component {
     workouts: [],
     activities: {},
     completed: {},
-    error: []
+    error: [],
+    activitiesOptions: []
   }
 
   componentDidMount = () => this.initialize()
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.activities !== this.state.activities) {
+      this.setState(prevState => ({
+        activitiesOptions: Object.entries(prevState.activities).map(([key, {name: label}]) => ({label, value: {key, label}, key}))
+      }))
+    }
+  }
 
   reset = async () => await AsyncStorage.multiSet(APP_RESET, (err) => { })
 
@@ -38,8 +47,6 @@ export class WorkoutProvider extends React.Component {
     })
     this.setState({loading: false})
   }
-
-
 
   get = async (key) => {
     try {
@@ -59,7 +66,7 @@ export class WorkoutProvider extends React.Component {
     } catch(error) { this.handleError(error) }
   }
 
-  append = key => toAppend => async () => {
+  append = ({key, content: toAppend, callback}) => async () => {
     try {
       await AsyncStorage.getItem(key, (error, value) => {
         if (!error) {
@@ -77,6 +84,7 @@ export class WorkoutProvider extends React.Component {
         else this.handleError(error)
       })
     } catch(error) { this.handleError(error) }
+    typeof callback === 'function' && callback()
   }
 
   render(){

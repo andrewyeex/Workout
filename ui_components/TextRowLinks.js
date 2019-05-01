@@ -8,7 +8,7 @@ const TextRowLinks = ({
   rightText,
   rightTextCallback
 }) => (
-  <View style={{flexDirection: 'row', padding: 20}}>
+  <View style={{flexDirection: 'row'}}>
     {leftText  &&
       <TouchableOpacity
         onPress={leftTextCallback}
@@ -31,7 +31,7 @@ const TextRowLinks = ({
 const base = {
   flex: 1,
   height: 40,
-  width: 80,
+  width: '48%',
   justifyContent: 'center',
   alignItems: 'center',
   marginHorizontal: 10
