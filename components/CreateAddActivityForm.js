@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { WorkoutContext } from '../context/WorkoutContext'
 import Select from '../ui_components/Select'
 import TextRowLinks from '../ui_components/TextRowLinks'
 
@@ -17,7 +18,7 @@ export default class CreateAddActivityForm extends PureComponent {
 
   render(){
     const { _setState } = this
-    const { closeModal, addActivity, activityOptions } = this.props
+    const { closeModal, addActivity } = this.props
     const { activitySelected, timeInSeconds } = this.state
     return(
       <View style={styles.container}>
@@ -29,11 +30,14 @@ export default class CreateAddActivityForm extends PureComponent {
           rightText={'Add'}
           rightTextCallback={addActivity(this.state)} />
 
-        <Select
-          placeholder={'Select an activity'}
-          options={activityOptions}
-          optionSelected={activitySelected}
-          handleOptionSelected={_setState('activitySelected')} />
+        <WorkoutContext.Consumer>
+          {({ activitiesOptions }) =>
+            <Select
+              placeholder={'Select an activity'}
+              options={activitiesOptions}
+              optionSelected={activitySelected}
+              handleOptionSelected={_setState('activitySelected')} />}
+        </WorkoutContext.Consumer>
 
         <Select
           placeholder={'Select a time in seconds'}

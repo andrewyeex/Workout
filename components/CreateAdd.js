@@ -74,13 +74,9 @@ const CreateAdd = ({
       animationType='slide'
       transparent={false}
       visible={isAddWorkoutActivitiesModalVisible}>
-      <WorkoutContext.Consumer>
-        {({ activitiesOptions }) =>
         <CreateAddActivityForm
           addActivity={handleAddActivities}
-          activityOptions={activitiesOptions}
-          closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />}
-      </WorkoutContext.Consumer>
+          closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />
     </Modal>
 
   </View>

@@ -6,8 +6,12 @@ import TextHeader from '../ui_components/TextHeader'
 import CreateAdd from '../components/CreateAdd'
 
 class CreateScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Create',
+  static navigationOptions = ({ navigation }) => {
+    const { state : { params } } = navigation
+    return {
+      title: 'Create',
+      headerLeft: params.showBack && <BackArrow onPress={_setState('mode')(0)} />
+    }
   }
 
   state = {
@@ -18,7 +22,7 @@ class CreateScreen extends React.Component {
       id: '',
       name: '',
       description: '',
-      image: 'https://via.placeholder.com/400?text=image',
+      image: 'https://via.placeholder.com/400/ffffff/000000?text=image',
       activities: [],
       duration: 0
     },
@@ -30,6 +34,18 @@ class CreateScreen extends React.Component {
     },
     addImageSelected: null,
     isWorkoutSelected: true
+  }
+
+  componentDidMount = () => {
+    this.props.navigation.setParams({ showBack: false, backFn: null })
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { setParams } = this.props.navigation
+    if (prevState.mode !== this.state.mode && this.state.mode > 0)
+      setParams({ showBack: true, backFn: this._setState('mode')(0) })
+    if (prevState.mode !== this.state.mode && this.state.mode !== 0)
+      setParams({ showBack: false, backFn: null })
   }
 
   _setStateObj = state => key => value => this.setState(prevState => ({
@@ -113,7 +129,7 @@ class CreateScreen extends React.Component {
     }
 
     return(
-      mode === 0 ? <CreateMenu _setState={_setState} /> : <CreateAdd {...createAddProps} /> 
+      mode === 0 ? <CreateMenu _setState={_setState} /> : <CreateAdd {...createAddProps} />
       // mode === 1 ? <CreateAdd {...createAddProps} /> :
       // mode === 2 ? this.renderRemovePage() :
       // mode === 3 ? this.renderEditPage() : this.renderErrorPage()

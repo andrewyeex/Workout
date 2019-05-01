@@ -28,7 +28,7 @@ class Row extends PureComponent {
         <TouchableOpacity style={styles.iconContainer} onPress={onPress(i)}>
           <Ionicons name='ios-remove-circle' size={24} />
         </TouchableOpacity>
-        <Text style={styles.text} >{label}</Text>
+        <Text style={styles.text}>{label}</Text>
         <Text style={styles.text}>{duration} sec</Text>
       </View>
     )
@@ -44,9 +44,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop: 10
+    backgroundColor: '#e8e8e8',
+    marginHorizontal: 10
   },
-  listContainer: { flexDirection: 'row' },
+  listContainer: {
+    flexDirection: 'row',
+  },
   scrollViewContainer: { height: 100 },
   iconContainer: {flex: 1 }
 })
