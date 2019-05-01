@@ -25,6 +25,10 @@ export class WorkoutProvider extends React.Component {
 
   componentDidMount = () => this.initialize()
 
+  reset = async () => await AsyncStorage.multiSet(APP_RESET, (err) => { })
+
+  handleError = error => this.setState(prevState => ({error: [...prevState.error, error]}), console.log({error}))
+
   initialize = async () => {
     await AsyncStorage.multiGet(APP_KEYS, (err, stores) => {
       for (const [key, value] of stores) {
@@ -35,28 +39,24 @@ export class WorkoutProvider extends React.Component {
     this.setState({loading: false})
   }
 
-  reset = async () => await AsyncStorage.multiSet(APP_RESET, (err) => { })
+
 
   get = async (key) => {
     try {
       await AsyncStorage.getItem(key, (error, value) => {
         if (!error) return value
-        else this.setState(prevState => ({error: [...prevState.error, error]}))
+        else this.handleError(error)
       })
-    } catch(error) {
-      this.setState(prevState => ({error: [...prevState.error, error]}))
-    }
+    } catch(error) { this.handleError(error) }
   }
 
   set = async (key, v = defaultData.app[key]) => {
     try {
       await AsyncStorage.setItem(key, JSON.stringify(v), (error) => {
         if (!error) this.setState({[key]: v})
-        else this.setState(prevState => ({error: [...prevState.error, error]}))
+        else this.handleError(error)
       })
-    } catch(error) {
-      this.setState(prevState => ({error: [...prevState.error, error]}))
-    }
+    } catch(error) { this.handleError(error) }
   }
 
   append = key => toAppend => async () => {
@@ -72,14 +72,11 @@ export class WorkoutProvider extends React.Component {
           } else {
             value[id] = toAppend
           }
-          console.log({key, value})
           this.set(key, value)
         }
-        else this.setState(prevState => ({error: [...prevState.error, error]}))
+        else this.handleError(error)
       })
-    } catch(error) {
-      this.setState(prevState => ({error: [...prevState.error, error]}))
-    }
+    } catch(error) { this.handleError(error) }
   }
 
   render(){
