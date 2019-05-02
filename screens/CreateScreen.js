@@ -8,11 +8,13 @@ import CreateAdd from '../components/CreateAdd'
 
 class CreateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    const { state : { params } } = navigation
-    console.log({params})
+    let headerLeft
+    const { state : { params = {} } } = navigation
+    if (params.showBack && typeof params.backFn === 'function')
+      headerLeft = <BackArrow onPress={params.backFn} />
     return {
       title: 'Create',
-      headerLeft: params && params.showBack && typeof params.backFn === 'function' && <BackArrow onPress={params.backFn} />
+      headerLeft
     }
   }
 

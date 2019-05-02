@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, ScrollView} from 'react-native'
 
+import BackArrow from '../ui_components/BackArrow'
 import WorkoutCard from '../components/WorkoutCard'
 import WorkoutInterval from '../components/WorkoutInterval'
 import WorkoutInfo from '../components/WorkoutInfo'
@@ -22,20 +23,44 @@ const imageMapper = {
 }
 
 export default class WorkoutScreen extends Component {
-  static navigationOptions = {
-    title: 'Workout',
+  static navigationOptions = ({ navigation }) => {
+    let headerLeft
+    const { state : { params = {} } } = navigation
+    if (params.showBack && typeof params.backFn === 'function')
+      headerLeft = <BackArrow onPress={params.backFn} />
+    return {
+      title: 'Workout',
+      headerLeft
+    }
   }
 
   state = {
     selectedWorkout: {},
+    hasWorkoutSelected: false,
     begin: false
   }
 
+  componentDidMount = () => {
+    this.props.navigation.setParams({ showBack: false, backFn: null })
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { setParams } = this.props.navigation
+    if (!prevState.hasWorkoutSelected && this.state.hasWorkoutSelected )
+      setParams({ showBack: true, backFn: this.handleSelectedWorkout({}) })
+    if (prevState.hasWorkoutSelected && !this.state.hasWorkoutSelected)
+      setParams({ showBack: false, backFn: null })
+  }
+
   handleBeginWorkout = begin => this.setState({ begin })
-  handleSelectedWorkout = selectedWorkout => () => this.setState({ selectedWorkout })
+  handleSelectedWorkout = selectedWorkout => () => this.setState({
+    selectedWorkout,
+    hasWorkoutSelected: Object.keys(selectedWorkout).length > 0
+  })
   handleEndActivity = () => this.setState({
     begin: false,
-    selectedWorkout: {}
+    selectedWorkout: {},
+    hasWorkoutSelected: false
   })
 
   renderWorkoutMenu = () => (
@@ -84,7 +109,7 @@ export default class WorkoutScreen extends Component {
   render() {
     return (
       <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'column'}}>
-        {Object.values(this.state.selectedWorkout).length > 0 ? this.renderWorkout() : this.renderWorkoutMenu()}
+        {this.state.hasWorkoutSelected ? this.renderWorkout() : this.renderWorkoutMenu()}
       </View>
     )
   }
