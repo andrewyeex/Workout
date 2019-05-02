@@ -22,10 +22,6 @@ const Activity = ({
     const { name } = activities[id]
     return (
       <View style={styles.container}>
-        <TextRowLinks
-          leftText={`${workoutActivityIndex + 1} of ${workoutActivitiesLength}`}
-          rightText={'END'}
-          rightTextCallback={handleEndActivity} />
         <TextHeader text={name.toUpperCase()} />
         <View style={styles.countdownContainer}>
           <Countdown key={order} duration={duration} intervalCallback={handleDecrementProgressCounter} onEnd={handleIncrementWorkoutActivityIndex}/>

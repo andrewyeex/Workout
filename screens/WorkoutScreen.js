@@ -47,7 +47,7 @@ export default class WorkoutScreen extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { setParams } = this.props.navigation
     if (!prevState.hasWorkoutSelected && this.state.hasWorkoutSelected )
-      setParams({ showBack: true, backFn: this.handleSelectedWorkout({}) })
+      setParams({ showBack: true, backFn: this.handleEndActivity })
     if (prevState.hasWorkoutSelected && !this.state.hasWorkoutSelected)
       setParams({ showBack: false, backFn: null })
   }

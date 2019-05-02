@@ -12,8 +12,7 @@ const WorkoutInfo = ({
   selectedWorkout : {
     name,
     description,
-    activities: _act,
-    handleSelectedWorkout
+    activities: _act
   },
   handleBeginWorkout
 }) => (
