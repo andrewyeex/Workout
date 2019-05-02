@@ -31,8 +31,6 @@ const CreateAdd = ({
 }) => (
   <View style={styles.container}>
 
-    <BackArrow onPress={_setState('mode')(0)} />
-
     <Select
       options={SelectOptions}
       optionSelected={addSelectedType}

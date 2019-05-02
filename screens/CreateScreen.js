@@ -3,14 +3,16 @@ import { View } from 'react-native'
 import { ImagePicker, Permissions } from 'expo'
 
 import TextHeader from '../ui_components/TextHeader'
+import BackArrow from '../ui_components/BackArrow'
 import CreateAdd from '../components/CreateAdd'
 
 class CreateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state : { params } } = navigation
+    console.log({params})
     return {
       title: 'Create',
-      headerLeft: params.showBack && <BackArrow onPress={_setState('mode')(0)} />
+      headerLeft: params && params.showBack && typeof params.backFn === 'function' && <BackArrow onPress={params.backFn} />
     }
   }
 
@@ -44,7 +46,7 @@ class CreateScreen extends React.Component {
     const { setParams } = this.props.navigation
     if (prevState.mode !== this.state.mode && this.state.mode > 0)
       setParams({ showBack: true, backFn: this._setState('mode')(0) })
-    if (prevState.mode !== this.state.mode && this.state.mode !== 0)
+    if(prevState.mode !== this.state.mode && this.state.mode === 0)
       setParams({ showBack: false, backFn: null })
   }
 
