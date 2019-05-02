@@ -2,16 +2,13 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import * as Progress from 'react-native-progress'
 
-import TextRowLinks from '../ui_components/TextRowLinks'
 import TextHeader from '../ui_components/TextHeader'
 import Countdown from '../ui_components/Countdown'
 
 const Activity = ({
-  handleEndActivity,
   activities,
   workoutActivities,
   workoutActivityIndex,
-  workoutActivitiesLength,
   handleIncrementWorkoutActivityIndex,
   handleDecrementProgressCounter,
   progressCounter,
