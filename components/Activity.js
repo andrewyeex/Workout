@@ -6,32 +6,32 @@ import TextHeader from '../ui_components/TextHeader'
 import Countdown from '../ui_components/Countdown'
 
 const Activity = ({
-  activities,
-  workoutActivities,
-  workoutActivityIndex,
+  currentActivity: {
+    name,
+    duration,
+    order
+  },
   handleIncrementWorkoutActivityIndex,
   handleDecrementProgressCounter,
-  progressCounter,
-  progressTotal
-}) => {
-  if (workoutActivities[workoutActivityIndex]) {
-    const { id, duration, order } = workoutActivities[workoutActivityIndex]
-    const { name } = activities[id]
-    return (
-      <View style={styles.container}>
-        <TextHeader text={name.toUpperCase()} />
-        <View style={styles.countdownContainer}>
-          <Countdown key={order} duration={duration} intervalCallback={handleDecrementProgressCounter} onEnd={handleIncrementWorkoutActivityIndex}/>
-        </View>
-        <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
-          <Progress.Pie key={order} size={300} progress={progressCounter/progressTotal}/>
-        </View>
-      </View>
-    )
-  } else {
-    return (<View></View>)
-  }
-}
+  progress
+}) => (
+  <View style={styles.container}>
+    <TextHeader text={name} />
+    <View style={styles.countdownContainer}>
+      <Countdown
+        key={order}
+        duration={duration}
+        intervalCallback={handleDecrementProgressCounter}
+        onEnd={handleIncrementWorkoutActivityIndex} />
+    </View>
+    <View style={styles.pieContainer}>
+      <Progress.Pie
+        key={order}
+        size={300}
+        progress={progress}/>
+    </View>
+  </View>
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
   countdownContainer: {
     alignItems: 'center',
     height: 100,
+  },
+  pieContainer: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 
