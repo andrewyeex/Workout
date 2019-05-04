@@ -46,20 +46,21 @@ export default class WorkoutInterval extends Component {
       handleEndActivity
     } = this.props
 
-    const currentActivity = this.workoutActivities[workoutActivityIndex]
-    currentActivity.name = activities[currentActivity.id].name.toUpperCase()
-
     if (showIntro)
       return <Countdown duration={1} onEnd={this.handleToggleShowIntro} />
     else
-      return (currentActivity && progressTotal > 0) ?
-        <Activity
+      if (progressTotal > 0)
+        return <Activity
+          activities={activities}
           handleEndActivity={handleEndActivity}
-          currentActivity={currentActivity}
-          progress={progressCounter/progressTotal}
+          workoutActivities={this.workoutActivities}
+          workoutActivityIndex={workoutActivityIndex}
+          progressCounter={progressCounter}
+          progressTotal={progressTotal}
           handleIncrementWorkoutActivityIndex={this.handleIncrementWorkoutActivityIndex}
           handleDecrementProgressCounter={this.handleDecrementProgressCounter}
-          workoutActivitiesLength={this.workoutActivitiesLength} /> :
-        <TouchableOpacity onPress={handleSelectedWorkout({})}><Text>Congratulations, you finished!</Text></TouchableOpacity>
+          workoutActivitiesLength={this.workoutActivitiesLength} />
+      else
+        return <TouchableOpacity onPress={handleSelectedWorkout({})}><Text>Congratulations, you finished!</Text></TouchableOpacity>
   }
 }
