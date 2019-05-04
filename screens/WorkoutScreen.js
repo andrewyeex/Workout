@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, ScrollView} from 'react-native'
 
 import BackArrow from '../ui_components/BackArrow'
 import WorkoutCard from '../components/WorkoutCard'
@@ -23,11 +23,16 @@ const imageMapper = {
 }
 
 export default class WorkoutScreen extends Component {
-  static navigationOptions = ({ state : { params = {} } }) => ({
-    title: 'Workout',
-    headerLeft : (params.showBack && typeof params.backFn === 'function') ?
-                  <BackArrow onPress={params.backFn} /> : undefined
-  })
+  static navigationOptions = ({ navigation }) => {
+    let headerLeft
+    const { state : { params = {} } } = navigation
+    if (params.showBack && typeof params.backFn === 'function')
+      headerLeft = <BackArrow onPress={params.backFn} />
+    return {
+      title: 'Workout',
+      headerLeft
+    }
+  }
 
   state = {
     selectedWorkout: {},
@@ -48,62 +53,63 @@ export default class WorkoutScreen extends Component {
   }
 
   handleBeginWorkout = begin => this.setState({ begin })
-
   handleSelectedWorkout = selectedWorkout => () => this.setState({
     selectedWorkout,
     hasWorkoutSelected: Object.keys(selectedWorkout).length > 0
   })
-
   handleEndActivity = () => this.setState({
     begin: false,
     selectedWorkout: {},
     hasWorkoutSelected: false
   })
 
-  render() {
-    const {
-      begin,
-      selectedWorkout,
-      hasWorkoutSelected,
-    } = this.state
+  renderWorkoutMenu = () => (
+    <ScrollView style={{flex: 1}}>
+      <WorkoutContext.Consumer>
+        {({ workouts }) => (
+          workouts.map(({
+            id,
+            name,
+            image,
+            description,
+            activities
+          }) => (
+            <WorkoutCard
+              key={id}
+              image={image.length < 6 ? imageMapper[image] : {uri: image}}
+              name={name}
+              description={description}
+              activities={activities}
+              handleSelectedWorkout={this.handleSelectedWorkout({
+                name,
+                description,
+                activities,
+                handleSelectedWorkout: this.handleSelectedWorkout
+              })} /> )))}
+      </WorkoutContext.Consumer>
+    </ScrollView>
+  )
 
+  renderWorkout = () => (
+    <WorkoutContext.Consumer>
+      {({ activities }) =>
+      this.state.begin ?
+      <WorkoutInterval
+        activities={activities}
+        handleEndActivity={this.handleEndActivity}
+        selectedWorkout={this.state.selectedWorkout}
+        handleSelectedWorkout={this.handleSelectedWorkout} /> :
+      <WorkoutInfo
+        activities={activities}
+        selectedWorkout={this.state.selectedWorkout}
+        handleBeginWorkout={this.handleBeginWorkout} /> }
+    </WorkoutContext.Consumer>
+  )
+
+  render() {
     return (
       <View style={{flex: 1, flexWrap: 'wrap', flexDirection: 'column'}}>
-        <WorkoutContext.Consumer>
-          {({ workouts, activities }) => {
-            if (hasWorkoutSelected)
-              return (
-                workouts.map(({
-                  id,
-                  name,
-                  image,
-                  description,
-                  activities
-                }) => (
-                  <WorkoutCard
-                    key={id}
-                    image={image.length < 6 ? imageMapper[image] : {uri: image}}
-                    name={name}
-                    description={description}
-                    activities={activities}
-                    handleSelectedWorkout={this.handleSelectedWorkout({
-                      name,
-                      description,
-                      activities,
-                      handleSelectedWorkout: this.handleSelectedWorkout })}/>)))
-            else
-              return (
-                begin ?
-                  <WorkoutInterval
-                    activities={activities}
-                    handleEndActivity={this.handleEndActivity}
-                    selectedWorkout={selectedWorkout}
-                    handleSelectedWorkout={this.handleSelectedWorkout} /> :
-                  <WorkoutInfo
-                    activities={activities}
-                    selectedWorkout={selectedWorkout}
-                    handleBeginWorkout={this.handleBeginWorkout} />)}}
-        </WorkoutContext.Consumer>
+        {this.state.hasWorkoutSelected ? this.renderWorkout() : this.renderWorkoutMenu()}
       </View>
     )
   }
