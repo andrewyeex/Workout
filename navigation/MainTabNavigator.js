@@ -17,11 +17,7 @@ WorkoutStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? 'ios-body'
-          : 'md-body'
-      }
+      name={Platform.OS === 'ios' ? 'ios-body': 'md-body'}
     />
   ),
 };
