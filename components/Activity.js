@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import * as Progress from 'react-native-progress'
 
 import TextRowLinks from '../ui_components/TextRowLinks'
@@ -18,21 +18,30 @@ const Activity = ({
   progressTotal
 }) => {
   if (workoutActivities[workoutActivityIndex]) {
-    const { id, duration, order } = workoutActivities[workoutActivityIndex]
-    const { name } = activities[id]
+    const {id, duration, order} = workoutActivities[workoutActivityIndex]
+    const {name} = activities[id]
     return (
       <View style={styles.container}>
         <TextHeader text={name.toUpperCase()} />
         <View style={styles.countdownContainer}>
-          <Countdown key={order} duration={duration} intervalCallback={handleDecrementProgressCounter} onEnd={handleIncrementWorkoutActivityIndex}/>
+          <Countdown
+            key={order}
+            duration={duration}
+            intervalCallback={handleDecrementProgressCounter}
+            onEnd={handleIncrementWorkoutActivityIndex}
+          />
         </View>
         <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
-          <Progress.Pie key={order} size={300} progress={progressCounter/progressTotal}/>
+          <Progress.Pie
+            key={order}
+            size={300}
+            progress={progressCounter / progressTotal}
+          />
         </View>
       </View>
     )
   } else {
-    return (<View></View>)
+    return <View />
   }
 }
 
@@ -44,7 +53,7 @@ const styles = StyleSheet.create({
   },
   countdownContainer: {
     alignItems: 'center',
-    height: 100,
+    height: 100
   }
 })
 

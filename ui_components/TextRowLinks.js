@@ -1,30 +1,32 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 
 const TextRowLinks = ({
   leftText,
-  isButton=false,
+  isButton = false,
   leftTextCallback,
   rightText,
   rightTextCallback
 }) => (
   <View style={{flexDirection: 'row'}}>
-    {leftText  &&
+    {leftText && (
       <TouchableOpacity
         onPress={leftTextCallback}
-        style={isButton ? style.button : style.textLink}>
-        <Text style={{fontWeight: '600', ...(!isButton && {color: '#5998ff'}) }}>
+        style={isButton ? style.button : style.textLink}
+      >
+        <Text style={{fontWeight: '600', ...(!isButton && {color: '#5998ff'})}}>
           {leftText}
         </Text>
-      </TouchableOpacity>}
-    {rightText &&
+      </TouchableOpacity>
+    )}
+    {rightText && (
       <TouchableOpacity
         onPress={rightTextCallback}
-        style={isButton ? style.button : style.textLink}>
-        <Text style={{fontWeight: '600'}}>
-          {rightText}
-        </Text>
-      </TouchableOpacity>}
+        style={isButton ? style.button : style.textLink}
+      >
+        <Text style={{fontWeight: '600'}}>{rightText}</Text>
+      </TouchableOpacity>
+    )}
   </View>
 )
 
@@ -41,7 +43,7 @@ const style = StyleSheet.create({
   button: {
     ...base,
     backgroundColor: '#aaa',
-    borderRadius: 3,
+    borderRadius: 3
   },
   textLink: {
     ...base,

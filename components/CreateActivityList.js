@@ -1,28 +1,40 @@
 import React, {PureComponent} from 'react'
-import { View, TouchableOpacity, Text, ScrollView, StyleSheet } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  StyleSheet
+} from 'react-native'
+import {Ionicons} from '@expo/vector-icons'
 
 import TextList from '../ui_components/TextList'
 
-const CreateAddActivityList = ({ activities, removeActivity }) => (
+const CreateAddActivityList = ({activities, removeActivity}) => (
   <View style={styles.container}>
-    {!!activities.length && <ScrollView style={styles.scrollViewContainer}>
-      <TextList>
-        {activities.map(({ activitySelected: {label}, timeInSeconds : duration }, i) =>
-          <Row
-            i={i}
-            key={i}
-            onPress={removeActivity}
-            label={label}
-            duration={duration}/>)}
-      </TextList>
-    </ScrollView>}
+    {!!activities.length && (
+      <ScrollView style={styles.scrollViewContainer}>
+        <TextList>
+          {activities.map(
+            ({activitySelected: {label}, timeInSeconds: duration}, i) => (
+              <Row
+                i={i}
+                key={i}
+                onPress={removeActivity}
+                label={label}
+                duration={duration}
+              />
+            )
+          )}
+        </TextList>
+      </ScrollView>
+    )}
   </View>
 )
 
 class Row extends PureComponent {
-  render(){
-    const { label, duration, onPress, i } = this.props
+  render() {
+    const {label, duration, onPress, i} = this.props
     return (
       <View style={styles.listContainer}>
         <TouchableOpacity style={styles.iconContainer} onPress={onPress(i)}>
@@ -48,10 +60,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   listContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
-  scrollViewContainer: { height: 100 },
-  iconContainer: {flex: 1 }
+  scrollViewContainer: {height: 100},
+  iconContainer: {flex: 1}
 })
 
 export default CreateAddActivityList

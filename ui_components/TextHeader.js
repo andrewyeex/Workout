@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import {TouchableOpacity, Text} from 'react-native'
 
 const TextHeader = ({
   text,
@@ -8,7 +8,10 @@ const TextHeader = ({
   style,
   fontStyle
 }) => (
-  <TouchableOpacity onPress={callback} style={{flex: .5, alignItems, ...style}}>
+  <TouchableOpacity
+    onPress={callback}
+    style={{flex: 0.5, alignItems, ...style}}
+  >
     <Text style={{fontSize: 40, fontWeight: '600', ...fontStyle}}>{text}</Text>
   </TouchableOpacity>
 )

@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Modal, StyleSheet } from 'react-native'
+import {View, Modal, StyleSheet} from 'react-native'
 
-import { WorkoutContext } from '../context/WorkoutContext'
+import {WorkoutContext} from '../context/WorkoutContext'
 import CreateAddActivityForm from './CreateAddActivityForm'
 import CreateAddActivityList from './CreateActivityList'
 import WorkoutCard from '../components/WorkoutCard'
@@ -27,63 +27,80 @@ const CreateAdd = ({
   handleAddActivities,
   handleRemoveActivities,
   isWorkoutSelected,
-  isAddWorkoutActivitiesModalVisible,
+  isAddWorkoutActivitiesModalVisible
 }) => (
   <View style={styles.container}>
-
     <Select
       options={SelectOptions}
       optionSelected={addSelectedType}
-      handleOptionSelected={_setState('isWorkoutSelected')} />
+      handleOptionSelected={_setState('isWorkoutSelected')}
+    />
 
     <TextInput
       placeholder='Enter a name'
       value={isWorkoutSelected ? addWorkoutObj.name : addActivityObj.name}
-      onChangeText={_setStateObj(isWorkoutSelected ? 'addWorkoutObj' : 'addActivityObj')('name')} />
+      onChangeText={_setStateObj(
+        isWorkoutSelected ? 'addWorkoutObj' : 'addActivityObj'
+      )('name')}
+    />
 
     <TextInput
       placeholder='Enter a description'
-      value={isWorkoutSelected ? addWorkoutObj.description : addActivityObj.description}
-      onChangeText={_setStateObj(isWorkoutSelected ? 'addWorkoutObj' : 'addActivityObj')('description')}  />
+      value={
+        isWorkoutSelected
+          ? addWorkoutObj.description
+          : addActivityObj.description
+      }
+      onChangeText={_setStateObj(
+        isWorkoutSelected ? 'addWorkoutObj' : 'addActivityObj'
+      )('description')}
+    />
 
-    {isWorkoutSelected &&
+    {isWorkoutSelected && (
       <View style={styles.workoutButtonContainer}>
         <ButtonInput
           onPress={_setState('isAddWorkoutActivitiesModalVisible')(true)}
           iconName='ios-add-circle-outline'
-          text='Add Activities' />
+          text='Add Activities'
+        />
         <CreateAddActivityList
           activities={addWorkoutObj.activities}
-          removeActivity={handleRemoveActivities} />
+          removeActivity={handleRemoveActivities}
+        />
         <ButtonInput
           onPress={handleImagePicker}
           iconName='ios-images'
-          text='Select an Image' />
-        <WorkoutCard image={{ uri: addWorkoutObj.image }} />
-      </View>}
+          text='Select an Image'
+        />
+        <WorkoutCard image={{uri: addWorkoutObj.image}} />
+      </View>
+    )}
 
     <View style={styles.containerBot}>
       <WorkoutContext.Consumer>
-        {({append}) => <Button type='success' text='Save' callback={append(payload)} /> }
+        {({append}) => (
+          <Button type='success' text='Save' callback={append(payload)} />
+        )}
       </WorkoutContext.Consumer>
     </View>
 
     <Modal
       animationType='slide'
       transparent={false}
-      visible={isAddWorkoutActivitiesModalVisible}>
-        <CreateAddActivityForm
-          addActivity={handleAddActivities}
-          closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)} />
+      visible={isAddWorkoutActivitiesModalVisible}
+    >
+      <CreateAddActivityForm
+        addActivity={handleAddActivities}
+        closeModal={_setState('isAddWorkoutActivitiesModalVisible')(false)}
+      />
     </Modal>
-
   </View>
 )
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  workoutButtonContainer: { flex:1 },
-  containerBot : {
+  container: {flex: 1},
+  workoutButtonContainer: {flex: 1},
+  containerBot: {
     padding: 10
   }
 })
