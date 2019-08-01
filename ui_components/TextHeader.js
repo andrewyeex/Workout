@@ -1,14 +1,19 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import {TouchableOpacity, Text} from 'react-native'
 
 const TextHeader = ({
   text,
   alignItems = 'center',
-  callback = () => console.warning('Callback Not Provided'),
+  callback,
+  style,
+  fontStyle
 }) => (
-  <View onPress={callback} style={{flex: .5, alignItems}}>
-    <Text style={{fontSize: 40, fontWeight: '600'}}>{text}</Text>
-  </View>
+  <TouchableOpacity
+    onPress={callback}
+    style={{flex: 0.5, alignItems, ...style}}
+  >
+    <Text style={{fontSize: 40, fontWeight: '600', ...fontStyle}}>{text}</Text>
+  </TouchableOpacity>
 )
 
 export default TextHeader
